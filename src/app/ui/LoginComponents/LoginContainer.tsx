@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import LoginForm from '@/app/ui/LoginComponents/LoginForm';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import { routeModule } from 'next/dist/build/templates/app-page';
+import router from 'next/navigation';
 
 
 const LoginContainer: React.FC = () => {
@@ -36,9 +38,9 @@ const LoginContainer: React.FC = () => {
                 // Almacenar el token y los datos del usuario en las cookies
                 Cookies.set('token', data.token);
                 Cookies.set('user', JSON.stringify(data.user));
-
                 setIsLoggedIn(true);
                 setError(null);
+               // router.push('/pages/auth/login');
             } else {
                 setError(data.message || 'Login failed. Please try again.');
             }

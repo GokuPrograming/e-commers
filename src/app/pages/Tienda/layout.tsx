@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import AdminNvar from '@/app/ui/Nvar/adminNvar';
-import "./globals.css";
+//import "./globals.css";
 
 export const metadata = {
   title: 'Next.js',
@@ -14,8 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-      
+      <body>        <AdminNvar></AdminNvar>
+
         {children}
       </body>
     </html>

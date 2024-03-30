@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import Counter from '@/app/ui/MenuStore/contador'
 type Product = {
     id_producto: number;
     producto: string;
@@ -15,19 +16,25 @@ type ProductItemProps = {
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
+    const [count, setCount] = useState(0);
 
     // Función manejadora para el clic del botón
     const handleAddToCartClick = () => {
         onAddToCart(producto.id_producto);
-        alert("Producto con ID " + producto.id_producto + " agregado al carrito");  // Mostrar el ID del producto en la alerta
+        alert(`Producto con ID ${producto.id_producto} agregado al carrito. Cantidad: ${count}`);  // Mostrar el ID del producto y la cantidad en la alerta
     };
-
     return (
         <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
 
             <div className="relative flex items-end overflow-hidden rounded-xl">
                 {/* ... */}
-
+                <div className="mt-1 p-2">
+                    <h2 className="text-slate-700">{producto.producto}</h2>
+                    <p className="mt-1 text-sm text-slate-400">ID: {producto.id_producto}</p>
+                    <p className="mt-1 text-sm text-slate-400">Precio: ${producto.precio}</p>
+                    <p className="mt-1 text-sm text-slate-400">Almacen: {producto.almacen} unidades</p>
+                    <Counter onCountChange={setCount}></Counter>
+                </div>
                 <div className="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
                     {/* ... */}
 
@@ -36,12 +43,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
                 </div>
             </div>
 
-            <div className="mt-1 p-2">
-                <h2 className="text-slate-700">{producto.producto}</h2>
-                <p className="mt-1 text-sm text-slate-400">ID: {producto.id_producto}</p>
-                <p className="mt-1 text-sm text-slate-400">Precio: ${producto.precio}</p>
-                <p className="mt-1 text-sm text-slate-400">Almacen: {producto.almacen} unidades</p>
-            </div>
+
 
         </article>
     );

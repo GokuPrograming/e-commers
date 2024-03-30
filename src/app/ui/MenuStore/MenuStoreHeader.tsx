@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'; 
 import { useRouter } from 'next/navigation';  // Importa useRouter del módulo correcto
-
 const MenuStoreHeader: React.FC = () => {
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     // const router = useRouter();  // Inicializa useRouter
@@ -23,7 +22,6 @@ const MenuStoreHeader: React.FC = () => {
             // Redirigir al usuario a la página de inicio de sesión si no hay token
           //  router.push('/pages/auth/login');
         }
-
         // Devuelve una función de limpieza vacía o null
         return () => { };
     }, []);  // Asegúrate de que el efecto se ejecute solo una vez al montar el componente

@@ -1,10 +1,20 @@
 "use client"
+
+
 import React, { useState, useEffect } from 'react';
 import ProductItem from './ProductItem';
 import MenuStoreHeader from './MenuStoreHeader';
 import Cookies from 'js-cookie';
+import AdminNvar from '@/app/ui/Nvar/adminNvar';
+
 import { useRouter } from 'next/navigation'; // Corrección en la importación
-const jwt = require('jsonwebtoken');
+import Link from 'next/link';
+import { getUserIdFromToken } from '../authUtils';
+import { getrolIdFromToken } from '../getrolID';
+// Importar la función de utilidad
+// import { useRouter } from 'next/navigation'; // Esta importación ya no es necesaria
+const token = Cookies.get('token');
+const id_rol = getrolIdFromToken(token);
 
 
 const MenuStore: React.FC = () => {
@@ -12,8 +22,23 @@ const MenuStore: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const redirectToPage = (path: string) => {
+        window.location.href = path;
+    };
+
 
     useEffect(() => {
+
+        const token = Cookies.get('token');
+        if (token) {
+            // Si hay un token válido, redirigir al usuario a la tienda
+            //redirectToPage('pages/Tienda');
+        } else {
+            // Si no hay un token válido, redirigir al usuario a la página principal
+         router.push('/pages/auth/login');
+        }
+
+
         const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:3000/product');
@@ -21,7 +46,6 @@ const MenuStore: React.FC = () => {
                 if (!response.ok) {
                     throw new Error('No se pudo obtener los datos');
                 }
-
                 const data = await response.json();
                 setProductos(data.data);
                 setIsLoading(false);
@@ -43,32 +67,13 @@ const MenuStore: React.FC = () => {
             return;
         }
 
-        // Imprimir el token antes de intentar verificarlo
-        console.log('Token recibido:', token);
+        const userId = getUserIdFromToken(token); // Utilizar la función de utilidad
 
-        let decodedToken; // Mover la declaración aquí para evitar redeclaración
-
-        try {
-            if (typeof token !== 'string') {
-                throw new Error('Token no válido');
-            }
-
-            decodedToken = jwt.verify(token, 'secreto'); // Asegúrate de usar el mismo "secreto"
-            console.log('Token decodificado:', decodedToken);
-             
-
-        } catch (verificationError) {
-            console.error('Error al verificar el token:', verificationError.message);
+        if (!userId) {
+            console.error('Error al obtener el id_usuario del token');
             return;
         }
 
-        if (!decodedToken || !decodedToken.id_usuario) {
-            throw new Error('Token inválido');
-        }
-
-        const userId = decodedToken.id_usuario;
-
-        // Configurar la URL de la API y el cuerpo de la solicitud
         const apiUrl = 'http://localhost:3000/addToCar';
         const requestBody = {
             id_producto: productId,
@@ -99,6 +104,7 @@ const MenuStore: React.FC = () => {
         // Mostrar mensaje de éxito al usuario
         alert('Producto agregado al carrito exitosamente');
     };
+    //fin de metodoo
 
     if (isLoading) {
         return <div>Cargando...</div>;
@@ -109,9 +115,11 @@ const MenuStore: React.FC = () => {
     }
 
     return (
+
         <div className="bg-white">
             <MenuStoreHeader />
             <section className="py-10 bg-gray-100">
+                {/* <Link href={'/pages/car'} >ir a carrito</Link> */}
                 <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {productos.map((producto) => (
                         <ProductItem key={producto.id_producto} producto={producto} onAddToCart={handleAddToCart} />

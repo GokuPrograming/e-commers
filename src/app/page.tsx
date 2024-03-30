@@ -1,11 +1,10 @@
-import { link } from "fs";
 import Link from "next/link";
-import { blob } from "stream/consumers";
-export default function Home() {
-  return (<>
-    <div>WelcomeHome</div>
-    <Link href="/pages/auth/login">logon</Link>
-  </>
+import IndexComponent from '@/app/ui/index/indexComponent'; // Asegúrate de que la ruta sea correcta
 
-  )
+export default function Home() {
+  return (
+    <>
+      <IndexComponent />
+    </>
+  );
 }
