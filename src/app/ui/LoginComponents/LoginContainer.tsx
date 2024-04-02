@@ -40,7 +40,7 @@ const LoginContainer: React.FC = () => {
                 Cookies.set('user', JSON.stringify(data.user));
                 setIsLoggedIn(true);
                 setError(null);
-               // router.push('/pages/auth/login');
+                // router.push('/pages/auth/login');
             } else {
                 setError(data.message || 'Login failed. Please try again.');
             }
@@ -58,22 +58,28 @@ const LoginContainer: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <div className="min-w-fit flex-col border bg-white px-6 py-14 shadow-md rounded-[4px]">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <div className="flex flex-col items-center justify-center max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+                <div className="rounded-full overflow-hidden w-24 h-24 mb-4">
+                    <img src="https://th.bing.com/th/id/OIG4.uGuC_WVR80SEIX63vhfB?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Logo" className="w-full h-full" />
+                </div>
                 {isLoggedIn ? (
                     <>
-                        <h2>Welcome! You are logged in.</h2>
-                        <p>Token: {token}</p>
-                        <p>User: {JSON.stringify(user)}</p>
-                        <Link href={'/pages/Tienda'}>Ir a la tienda</Link>
+                        <h2 className=" text-xl font-semibold mb-2 ">BIENVENIDO, MUCHAS GFRACIAS POR SU PREFERENCIA</h2>
+                        {/* <p className="mb-2">Token: {token}</p> */}
+                        <p className=" hidden mb-4">User: {JSON.stringify(user)}</p>
+                        <Link  href="/pages/Tienda"><span className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-950-600'>Ir a tienda</span>
+                        </Link>
                         <br />
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                            Logout
+                        </button>
                     </>
                 ) : (
                     <LoginForm onLogin={handleLogin} />
                 )}
                 {error && (
-                    <p className="mt-4 text-red-500 text-xs italic">{error}</p>
+                    <p className="mt-2 text-red-500 text-xs italic">{error}</p>
                 )}
             </div>
         </div>

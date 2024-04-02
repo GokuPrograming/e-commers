@@ -72,7 +72,7 @@ function indexComponent() {
                     </div>
                     <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
                         <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-                            <img src="https://th.bing.com/th/id/OIG4.m6rCxlBYPavbHIGTEm.e?pid=ImgGn" alt="App screenshot" width="2432" height="1442" className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10" />
+                            <img src="https://th.bing.com/th/id/OIG1.wd_GRphO4taOCSmOMtUB?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="App screenshot" width="2432" height="1442" className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10" />
                         </div>
                     </div>
                 </div>

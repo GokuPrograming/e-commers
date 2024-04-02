@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie'; 
-import { useRouter } from 'next/navigation';  // Importa useRouter del módulo correcto
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import ProductSearch from './ProductSearch';
+// Importa useRouter del módulo correcto
+interface SearchProps {
+    products: "";
+}
 const MenuStoreHeader: React.FC = () => {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const router = useRouter();  // Inicializa useRouter
-
-    // const handleLogout = () => {
-    //     // Eliminar el token y los datos del usuario de las cookies al cerrar sesión
-    //     Cookies.remove('token');
-    //     Cookies.remove('user');
-    //     setIsLoggedIn(false);
-
-    //     // Redirigir al usuario a la página de inicio de sesión
-    //     router.push('/pages/auth/login');
-    // };
-
+ 
     useEffect(() => {
         const token = Cookies.get('token');
-
         if (!token) {
-            // Redirigir al usuario a la página de inicio de sesión si no hay token
-          //  router.push('/pages/auth/login');
         }
-        // Devuelve una función de limpieza vacía o null
+
         return () => { };
     }, []);  // Asegúrate de que el efecto se ejecute solo una vez al montar el componente
 
@@ -46,6 +36,10 @@ const MenuStoreHeader: React.FC = () => {
                     </svg>
                     <span>Corrupti</span>
                 </a>
+                <a rel="noopener noreferrer" href="#" className="flex items-center flex-shrink-0 px-5 py-3 space-x-2 rounded-t-lg text-gray-900">
+                    <h1 className="text-2xl font-bold mb-4">Product Search</h1>
+                    {/* <ProductSearch products={products} /> */}
+                    <ProductSearch />                 </a>
                 <a rel="noopener noreferrer" href="#" className="flex items-center flex-shrink-0 px-5 py-3 space-x-2 text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
