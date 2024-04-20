@@ -3,40 +3,38 @@ import { useRouter } from 'next/navigation'; // Corrección en la importación
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { getUserIdFromToken } from '../authUtils'; // Importar la función de utilidad
-import AdminNvar from '@/app/ui/Nvar/adminNvar';
+import Cupon from './cupon';
+import { fetchCartItems } from '@/app/api/carrito';
 
 interface CartItem {
   id_producto: number;
   id_usuario: number;
+  producto: string;
   cantidad: string;
   sub_total: string;
+  total: number;
 }
 
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartTotal, setCartTotal] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<number | null>(null); // Estado para almacenar el id_usuario
+  const [total, setTotal] = useState<number | null>();
   const router = useRouter();
   const token = Cookies.get('token');
+  const userIdFromToken = getUserIdFromToken(token);
 
   useEffect(() => {
-
-    //const token = Cookies.get('token');
-    if (token) {
-      // Si hay un token válido, redirigir al usuario a la tienda
-      //redirectToPage('pages/Tienda');
-    } else {
-      // Si no hay un token válido, redirigir al usuario a la página principal
+    if (!token) {
       router.push('/pages/auth/login');
+      return; // Salir del useEffect si no hay token
     }
-    const fetchCartItems = async () => {
+    const fetchTotalCar = async () => {
       try {
         // Obtener el id_usuario del token
-        const userIdFromToken = getUserIdFromToken(token || '');
         setUserId(userIdFromToken);
-
-        const apiUrl = 'http://localhost:3000/user/car';
-
+        const apiUrl = 'http://localhost:3000/user/car/total';
         // Realizar la solicitud POST a la API
         const response = await fetch(apiUrl, {
           method: 'POST',
@@ -48,35 +46,60 @@ const Cart: React.FC = () => {
             id_usuario: userIdFromToken // Utilizar el id_usuario obtenido del token
           })
         });
-
         // Verificar si la solicitud se envió correctamente
         if (!response.ok) {
           throw new Error('No se pudo obtener los datos');
         }
-
         const responseData = await response.json();
-        setCartItems(responseData.data); // Ajustar para manejar el nuevo formato de respuesta
+        // console.log('Respuesta de la API:', responseData.data); // Imprimir la respuesta en la consola
+        const totalFromResponse = responseData.data[0]?.total;
+
+        if (totalFromResponse) {
+          const parsedTotal = parseFloat(totalFromResponse); // Convertir el string a número
+          setTotal(parsedTotal);
+          console.log("la respuesta ", parsedTotal);
+        }
         setLoading(false);
+
       } catch (error) {
         console.error('Error al obtener los productos del carrito:', error);
         setLoading(false);
       }
     };
 
-    fetchCartItems();
-  }, [token]);
 
-  const getTotalPrice = (): string => {
-    const total = cartItems.reduce((acc, item) => acc + parseFloat(item.sub_total), 0);
-    return total.toFixed(2);
-  };
+    const fetchData = async () => {
+      try {
+        await fetchCartItems(setCartItems, setUserId, setLoading);
+        fetchTotalCar();
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+  }, [token]);
+  const handleToPedido = async () => {
+    const token = Cookies.get('token');
+    if (!token) {
+      router.push('/pages/auth/login');
+      return;
+    }
+    const userId = getUserIdFromToken(token); // Utilizar la función de utilidad
+    if (!userId) {
+      console.error('Error al obtener el id_usuario del token');
+      return;
+    }
+    // Llamar a fetchData nuevamente para actualizar los datos
+    router.push('/pages/pedido');
+  }
 
   const removeFromCart = async (id_producto: number): Promise<void> => {
     const userIdFromToken = getUserIdFromToken(token || '');
     setUserId(userIdFromToken);
-
     const apiUrl = 'http://localhost:3000/user/car/Delete_element';
-
     try {
       // Realizar la solicitud DELETE a la API
       const response = await fetch(apiUrl, {
@@ -93,13 +116,14 @@ const Cart: React.FC = () => {
 
       if (response.ok) {
         // Si la respuesta es exitosa, filtrar los elementos del carrito
-        setCartItems(cartItems.filter((item) => item.id_producto !== id_producto));
+
+        setCartItems(cartTotal.filter((item) => item.id_producto !== id_producto));
+
       } else {
         // Manejo de errores en caso de respuesta no exitosa
         console.error(`Error al eliminar el producto ${id_producto}. Código de estado: ${response.status}`);
       }
     } catch (error) {
-      // Manejo de errores en caso de fallo en la solicitud
       console.error('Error al intentar eliminar el producto:', error);
     }
   };
@@ -110,7 +134,6 @@ const Cart: React.FC = () => {
   }
 
   return (
- 
     <div className="container mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Carrito de Compra</h1>
       <p className="text-gray-600 mb-4">ID de usuario: {userId}</p>
@@ -139,11 +162,13 @@ const Cart: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
+
                   </div>
                 </div>
               </li>
             ))}
           </ul>
+          <Cupon></Cupon>
         </div>
 
         <div className="col-span-1">
@@ -151,9 +176,10 @@ const Cart: React.FC = () => {
             <h2 className="text-xl font-semibold mb-4">Resumen</h2>
             <div className="flex justify-between items-center mb-4">
               <span className="text-gray-600">Total:</span>
-              <span className="text-2xl font-bold">${getTotalPrice()}</span>
+              ${total}
             </div>
-            <button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none">
+            <button onClick={handleToPedido}
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none">
               Proceder al Pago
             </button>
           </div>

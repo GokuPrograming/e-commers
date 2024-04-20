@@ -72,8 +72,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
 
         const responseData = await response.json();
         console.log('Respuesta de la API:', responseData);
-        // Actualizar el estado del producto para reflejar el nuevo valor del almacén
-        // Reiniciar el contador a cero
         alert('Producto agregado al carrito exitosamente');
         reset();
     };

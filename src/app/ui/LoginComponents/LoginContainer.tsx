@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import LoginForm from '@/app/ui/LoginComponents/LoginForm';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { routeModule } from 'next/dist/build/templates/app-page';
+import { login } from '../../api/loginApi'// Importar la función login desde el archivo loginApi
 import router from 'next/navigation';
-
 
 const LoginContainer: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,35 +24,24 @@ const LoginContainer: React.FC = () => {
     }, []);
 
     const handleLogin = async (correo: string, password: string) => {
-        try {
-            const response = await fetch('http://localhost:3000/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ correo, password }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                // Almacenar el token y los datos del usuario en las cookies
-                Cookies.set('token', data.token);
-                Cookies.set('user', JSON.stringify(data.user));
-                setIsLoggedIn(true);
-                setError(null);
-                // router.push('/pages/auth/login');
-            } else {
-                setError(data.message || 'Login failed. Please try again.');
-            }
-        } catch (error) {
-            setError('An error occurred. Please try again.');
+        // Usar la función login
+        const { success, data, error } = await login(correo, password);
+        //valida la respuesta
+        if (success && data) {
+            // Almacenar el token y los datos del usuario en las cookies
+            Cookies.set('token', data.token);
+            Cookies.set('user', JSON.stringify(data.user));
+            setIsLoggedIn(true);
+            setError(null);
+        } else {
+            setError(data.message || 'Login failed. Please try again.');
         }
     };
-
+    //cerrar sesion
     const handleLogout = () => {
         // Eliminar el token y los datos del usuario de las cookies al cerrar sesión
         Cookies.remove('token');
         Cookies.remove('user');
-
         setIsLoggedIn(false);
     };
 
@@ -68,7 +56,7 @@ const LoginContainer: React.FC = () => {
                         <h2 className=" text-xl font-semibold mb-2 ">BIENVENIDO, MUCHAS GFRACIAS POR SU PREFERENCIA</h2>
                         {/* <p className="mb-2">Token: {token}</p> */}
                         <p className=" hidden mb-4">User: {JSON.stringify(user)}</p>
-                        <Link  href="/pages/Tienda"><span className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-950-600'>Ir a tienda</span>
+                        <Link href="/pages/Tienda"><span className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-950-600'>Ir a tienda</span>
                         </Link>
                         <br />
                         <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">

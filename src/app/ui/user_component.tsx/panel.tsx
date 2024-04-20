@@ -1,6 +1,9 @@
 "use client"
 import React, { useState, ReactElement } from 'react';
-import ProductoComponent from './producto_component';
+import ProductoComponent from './informacion_personal';
+import PDF from './pdf_componente';
+import Charts from './charts';
+import DireccionForm from './DireccionForm';
 /// validar que el usuario sea administrador y que este logeado
 
 function Panel(): ReactElement {
@@ -19,8 +22,25 @@ function Panel(): ReactElement {
             <div>
                 <h2>Inicio</h2>
                 <p>Contenido de la página de inicio</p>
+                <DireccionForm></DireccionForm>
             </div>
         );
+    }
+    const handlerPDF = () => {
+        setContent(
+            <>
+                <div>
+                    <PDF></PDF>
+                </div>
+            </>
+        )
+    }
+    const handlerCharts = () => {
+        setContent(
+            <div>
+                <Charts></Charts>
+            </div>
+        )
     }
 
     return (
@@ -53,7 +73,10 @@ function Panel(): ReactElement {
                                 <button onClick={handleProducts} className="block px-4 py-2 hover:bg-gray-700">Productos</button>
                             </li>
                             <li className="mb-2">
-                                <a href="#" className="block px-4 py-2 hover:bg-gray-700">Configuración</a>
+                                <button onClick={handlerPDF} className="block px-4 py-2 hover:bg-gray-700">PDF</button>
+                            </li>
+                            <li className="mb-2">
+                                <button onClick={handlerCharts} className="block px-4 py-2 hover:bg-gray-700">Graficos</button>
                             </li>
                         </ul>
                     </nav>

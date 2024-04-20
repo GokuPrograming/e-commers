@@ -6,7 +6,7 @@ export const getrolIdFromToken = (token: string): number | null => {
         if (!decodedToken || !decodedToken.id_rol) {
             throw new Error('Token inválido');
         }
-        console.log(decodedToken.id_rol)
+       // console.log(decodedToken.id_rol)
        return decodedToken.id_rol;
     } catch (error) {
         console.error('Error al verificar el token:', error.message);

@@ -16,15 +16,16 @@ const useAdminNvar = () => {
   }, []);
 
   const renderNavbar = () => {
-    if (idRol === 1) {
-      console.log("id", idRol);
-      return <Nvar1 />;
-    } else if (idRol === 2) {
-      console.log("id=", idRol);
-      return <Nvar2 />;
-    } else {
-      console.log("id  ", idRol);
-      return <Nvar3 />;
+    switch (idRol) {
+      case 1:
+        console.log("id", idRol);
+        return <Nvar1 />;
+      case 2:
+        console.log("id=", idRol);
+        return <Nvar2 />;
+      default:
+        console.log("id  ", idRol);
+        return <Nvar3 />;
     }
   };
 
