@@ -9,17 +9,18 @@ import StepLabel from '@mui/material/StepLabel';
 import { getUserIdFromToken } from '../authUtils';
 import PayPalComponent from '@/app/ui/utileria/paypal';
 import Cookies from 'js-cookie';
+import Pago from '../utileria/mercadoPago';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 const token = Cookies.get('token');
-
+///variables necesarias para su funcionalidad
 interface PersonalData {
     nombre: string;
     apellido_materno: string;
     apellido_paterno: string;
     correo: string;
     telefono: string;
-
 }
+
 
 interface AddressData {
     id_estado: number,
@@ -38,6 +39,9 @@ interface CardData {
 }
 interface Cupon {
     cupon: string;
+}
+interface Total {
+    total: number;
 }
 // interface ClienteData {
 //     nombre: string;
@@ -63,6 +67,7 @@ const CheckoutForm: React.FC = () => {
     ///registro de los paises
 
     const [activeStep, setActiveStep] = useState<number>(0);
+
     const [personalData, setPersonalData] = useState<PersonalData>({
         nombre: '',
         apellido_paterno: '',
@@ -70,6 +75,54 @@ const CheckoutForm: React.FC = () => {
         correo: '',
         telefono: ''
     });
+
+    const [total, setTotal] = useState<Total>({
+        total: 0,
+    })
+    const fetchTotal = async () => {
+        try {
+            const userId = getUserIdFromToken(token);
+            const apiClient = 'http://localhost:3000/user/car/total';
+            const requestBody = {
+                id_usuario: userId,
+            };
+            const response = await fetch(apiClient, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+            if (!response.ok) {
+                throw new Error('No se pudo obtener los datos');
+            }
+            const responseData = await response.json();
+            setTotal(responseData.data);
+            setTotal({
+                //los valores de la base de datos se recuperan en las variables globales para su uso mas practico
+                total: responseData.data[0].total
+            });
+            console.log("el total=", responseData.data[0].total);
+            if (responseData.data.length > 0) {
+                console.log("Los datos están cargados:", responseData.data[0].total);
+            } else {
+                console.log("Los datos están vacíos o no se pudieron cargar");
+            }
+            // Aquí puedes usar los valores de datosCliente
+            if (datosCliente.length > 0) {
+                const primerApellido = datosCliente[0].apellido_paterno;
+                console.log("Primer apellido del cliente:", primerApellido);
+            }
+
+        } catch (error) {
+            console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+            setError(error instanceof Error ? error.message : String(error));
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    //trae los datos de pais 
     const fetchData = async () => {
         try {
             const response = await fetch('http://localhost:3000/pais');
@@ -83,66 +136,57 @@ const CheckoutForm: React.FC = () => {
             console.error('Error fetching data:', error);
         }
     };
-    useEffect(() => {
-
-
-        const fetchInformacionCliente = async () => {
-            try {
-                const userId = getUserIdFromToken(token);
-                const apiClient = 'http://localhost:3000/informacionCliente';
-                const requestBody = {
-                    id_usuario: userId,
-                };
-                const response = await fetch(apiClient, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-                if (!response.ok) {
-                    throw new Error('No se pudo obtener los datos');
-                }
-                const responseData = await response.json();
-                setDataClient(responseData.data);
-                setPersonalData({
-                    //los valores de la base de datos se recuperan en las variables globales para su uso mas practico
-                    nombre: responseData.data[0].nombre,
-                    apellido_paterno: responseData.data[0].apellido_paterno,
-                    apellido_materno: responseData.data[0].apellido_materno,
-                    correo: responseData.data[0].correo,
-                    telefono: responseData.data[0].telefono
-                });
-
-                console.log("guardado en set data client");
-                console.log("los datos del usuario con .data: ", responseData.data);
-                console.log("los datos del usuario sin .data: ", responseData);
-                console.log("el apellido p=", responseData.data[0].apellido_paterno);
-                if (responseData.data.length > 0) {
-                    console.log("Los datos están cargados:", responseData.data);
-                } else {
-                    console.log("Los datos están vacíos o no se pudieron cargar");
-                }
-                // Aquí puedes usar los valores de datosCliente
-                if (datosCliente.length > 0) {
-                    const primerApellido = datosCliente[0].apellido_paterno;
-                    console.log("Primer apellido del cliente:", primerApellido);
-                }
-
-            } catch (error) {
-                console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
-                setError(error instanceof Error ? error.message : String(error));
-            } finally {
-                setIsLoading(false);
+    // carga la informacion del cliente 
+    const fetchInformacionCliente = async () => {
+        try {
+            const userId = getUserIdFromToken(token);
+            const apiClient = 'http://localhost:3000/informacionCliente';
+            const requestBody = {
+                id_usuario: userId,
+            };
+            const response = await fetch(apiClient, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+            if (!response.ok) {
+                throw new Error('No se pudo obtener los datos');
             }
-        };
+            const responseData = await response.json();
+            setDataClient(responseData.data);
+            setPersonalData({
+                //los valores de la base de datos se recuperan en las variables globales para su uso mas practico
+                nombre: responseData.data[0].nombre,
+                apellido_paterno: responseData.data[0].apellido_paterno,
+                apellido_materno: responseData.data[0].apellido_materno,
+                correo: responseData.data[0].correo,
+                telefono: responseData.data[0].telefono
+            });
+            console.log("guardado en set data client");
+            console.log("los datos del usuario con .data: ", responseData.data);
+            console.log("los datos del usuario sin .data: ", responseData);
+            console.log("el apellido p=", responseData.data[0].apellido_paterno);
+            if (responseData.data.length > 0) {
+                console.log("Los datos están cargados:", responseData.data);
+            } else {
+                console.log("Los datos están vacíos o no se pudieron cargar");
+            }
+            // Aquí puedes usar los valores de datosCliente
+            if (datosCliente.length > 0) {
+                const primerApellido = datosCliente[0].apellido_paterno;
+                console.log("Primer apellido del cliente:", primerApellido);
+            }
 
-        fetchInformacionCliente();
-        fetchData();
-        //  fetchInformacionCliente();
-    }, []);
-
+        } catch (error) {
+            console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+            setError(error instanceof Error ? error.message : String(error));
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleChangeCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const id = countries.find((country) => country.name === event.target.value)?.id || null;
@@ -178,6 +222,14 @@ const CheckoutForm: React.FC = () => {
             setOptions([]); // Si no hay un país seleccionado, reiniciar las opciones
         }
     };
+    //ejecuta todos los metodos en automatico al cargar la pagina
+    useEffect(() => {
+
+        fetchInformacionCliente();
+        fetchData();
+        fetchTotal();        //  fetchInformacionCliente();
+    }, []);
+
     const [addressData, setAddressData] = useState<AddressData>({
         direccion: '',
         ciudad: '',
@@ -185,10 +237,6 @@ const CheckoutForm: React.FC = () => {
         id_estado: 0,
         id_pais: 0,
         codigo_postal: ''
-
-        // descripcion: string;
-        // direccion: string;
-        // ciudad: string;
     });
     const [cardData, setCardData] = useState<CardData>({
         cardNumber: '',
@@ -198,15 +246,6 @@ const CheckoutForm: React.FC = () => {
     const [cupon, setCupon] = useState<Cupon>({
         cupon: '',
     })
-
-    const handleNext = (): void => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        // console.log("presionaste Next y los datatos son ","id del pais:", personalData.id_pais,"id del estado", personal.id_esatdo)
-    };
-
-    const handleBack = (): void => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
     const handleProbarCupon = async () => {
         const userId = getUserIdFromToken(token); // Asegúrate de que esta función esté definida y token esté definido.
         const apiUrl = 'http://localhost:3000/user/cupon';
@@ -235,8 +274,27 @@ const CheckoutForm: React.FC = () => {
         const responseData = await response.json();
         console.log('Respuesta de la API:', responseData.message);
         alert(responseData.message);
-        //  alert('', responseData);
-        //reset();
+    const newTotal = responseData.newTotal; 
+    if(newTotal>0){
+        setTotal({
+            total: newTotal
+        });
+    }else{
+//no hace nada
+    }
+    // Asignando newTotal a una variable
+    //Ahora puedes usar newTotal como lo necesites
+    console.log(newTotal);
+    };
+
+
+    const handleNext = (): void => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // console.log("presionaste Next y los datatos son ","id del pais:", personalData.id_pais,"id del estado", personal.id_esatdo)
+    };
+
+    const handleBack = (): void => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     // const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -374,6 +432,13 @@ const CheckoutForm: React.FC = () => {
                             value={personalData.telefono}
                             onChange={handleInputChange(setPersonalData, 'telefono')}
                         />
+                        <TextField
+                            label="Total"
+                            fullWidth
+                            value={total.total}
+                        //onChange={handleInputChange(setPersonalData, 'telefono')}
+                        />
+
                     </Grid>
                 );
             case 1:
@@ -450,11 +515,10 @@ const CheckoutForm: React.FC = () => {
                             value={cardData.expiryDate}
                             onChange={handleInputChange(setCardData, 'expiryDate')}
                         /> */}
-
-
-
-                        <PayPalScriptProvider options={{ 'client-id': 'ATsXThlRKQMIDRsC0xX-EWt57Vg_FkznXcQNTrWdHgT-X2337ZiEuWGnnOgtubRXGfMJICcIOZ_lZ6aY' }}>
-
+Total={total.total}
+                        <PayPalScriptProvider options={{
+                            'client-id': 'ATsXThlRKQMIDRsC0xX-EWt57Vg_FkznXcQNTrWdHgT-X2337ZiEuWGnnOgtubRXGfMJICcIOZ_lZ6aY&currency=MXN',
+                        }}>
                             <PayPalButtons
                                 createOrder={async () => {
                                     try {
@@ -464,9 +528,8 @@ const CheckoutForm: React.FC = () => {
                                                 'Content-Type': 'application/json',
                                             },
                                             body: JSON.stringify({
-                                                // Puedes agregar aquí los detalles del pedido, como el monto y la moneda
-                                                amount: '10.00',
-                                                currency_code: 'USD',
+                                                amount: total.total.toString(),
+                                                currency_code: 'MXN', // Specify MXN for pesos
                                             }),
                                         });
 
@@ -475,26 +538,16 @@ const CheckoutForm: React.FC = () => {
                                         }
 
                                         const data = await response.json();
-                                        return data.orderID; // Debes retornar el ID del pedido que recibes del servidor
+                                        return data.orderID;
                                     } catch (error) {
                                         console.log(error);
                                         throw error;
                                     }
                                 }}
-                                onApprove={async (data: any, actions: any) => {
-                                    // Aquí puedes realizar acciones adicionales cuando el pago es aprobado
-
-                                    console.log('Pago aprobado:', data);
-                                    await handleSubmit();
-                                    return actions.order.capture();
-                                }}
-                                onCancel={(data: any) => {
-                                    // Aquí puedes realizar acciones adicionales cuando el usuario cancela el pago
-                                    console.log('Pago cancelado:', data);
-                                }}
-                                style={{ layout: 'horizontal' }}
+                            // ... other PayPalButtons props
                             />
                         </PayPalScriptProvider>
+
                     </Grid>
                 );
             default:
