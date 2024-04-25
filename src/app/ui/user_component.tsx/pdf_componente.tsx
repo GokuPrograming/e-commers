@@ -1,10 +1,7 @@
 import React from 'react';
 import { jsPDF } from 'jspdf';
 
-function PDF() {
-
-
-    
+function PDF() { 
   const generatePDF = () => {
     const doc = new jsPDF();
     

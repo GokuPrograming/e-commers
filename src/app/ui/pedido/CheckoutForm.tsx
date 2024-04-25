@@ -11,6 +11,7 @@ import PayPalComponent from '@/app/ui/utileria/paypal';
 import Cookies from 'js-cookie';
 import Pago from '../utileria/mercadoPago';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { log } from 'console';
 const token = Cookies.get('token');
 ///variables necesarias para su funcionalidad
 interface PersonalData {
@@ -42,6 +43,9 @@ interface Cupon {
 }
 interface Total {
     total: number;
+}
+interface orderID {
+    orderID: string;
 }
 // interface ClienteData {
 //     nombre: string;
@@ -98,7 +102,6 @@ const CheckoutForm: React.FC = () => {
                 throw new Error('No se pudo obtener los datos');
             }
             const responseData = await response.json();
-            setTotal(responseData.data);
             setTotal({
                 //los valores de la base de datos se recuperan en las variables globales para su uso mas practico
                 total: responseData.data[0].total
@@ -238,14 +241,15 @@ const CheckoutForm: React.FC = () => {
         id_pais: 0,
         codigo_postal: ''
     });
-    const [cardData, setCardData] = useState<CardData>({
-        cardNumber: '',
-        expiryDate: '',
-        cvv: ''
-    });
+
     const [cupon, setCupon] = useState<Cupon>({
         cupon: '',
     })
+
+    const [orderID, setOrderId] = useState<orderID>({
+        orderID: '',
+    });
+
     const handleProbarCupon = async () => {
         const userId = getUserIdFromToken(token); // Asegúrate de que esta función esté definida y token esté definido.
         const apiUrl = 'http://localhost:3000/user/cupon';
@@ -274,19 +278,30 @@ const CheckoutForm: React.FC = () => {
         const responseData = await response.json();
         console.log('Respuesta de la API:', responseData.message);
         alert(responseData.message);
-    const newTotal = responseData.newTotal; 
-    if(newTotal>0){
-        setTotal({
-            total: newTotal
-        });
-    }else{
-//no hace nada
-    }
-    // Asignando newTotal a una variable
-    //Ahora puedes usar newTotal como lo necesites
-    console.log(newTotal);
+        const newTotal = responseData.newTotal;
+        if (newTotal > 0) {
+            setTotal({
+                total: newTotal
+            });
+        } else {
+            //no hace nada
+        }
+        // Asignando newTotal a una variable
+        //Ahora puedes usar newTotal como lo necesites
+        console.log(newTotal);
     };
 
+    const handleActualizarOrderID = (orderID1: any) => {
+        console.log("es el order id de la peticion", orderID1);
+        
+        // setOrderId({
+        //     orderID:orderID1
+        //     });
+        orderID.orderID=orderID1;
+        console.log("cargo el handler",orderID.orderID);
+       // orderID:"mememem"
+        
+    };
 
     const handleNext = (): void => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -346,8 +361,11 @@ const CheckoutForm: React.FC = () => {
         try {
             console.log('Personal Data:', personalData);
             console.log('Address Data:', addressData);
-            console.log('Card Data:', cardData);
+   
             console.log('cupon data:', cupon)
+            console.log('total a enviar', total.total);
+            console.log('ORDER ID_ ',orderID.orderID);
+            
 
             const userId = getUserIdFromToken(token);
             const apiUrl = 'http://localhost:3000/realizar_compra';
@@ -364,7 +382,9 @@ const CheckoutForm: React.FC = () => {
                 apellido_paterno: personalData.apellido_paterno,
                 apellido_materno: personalData.apellido_materno,
                 telefono: personalData.telefono,
-                codigo: cupon.cupon
+                codigo: cupon.cupon,
+                total: total.total,
+                orderID: orderID.orderID
             };
 
             const response = await fetch(apiUrl, {
@@ -503,19 +523,6 @@ const CheckoutForm: React.FC = () => {
             case 2:
                 return (
                     <Grid container spacing={3}>
-                        {/* <TextField
-                            label="Número de tarjeta"
-                            fullWidth
-                            value={cardData.cardNumber}
-                            onChange={handleInputChange(setCardData, 'cardNumber')}
-                        />
-                        <TextField
-                            label="Fecha de expiración"
-                            fullWidth
-                            value={cardData.expiryDate}
-                            onChange={handleInputChange(setCardData, 'expiryDate')}
-                        /> */}
-Total={total.total}
                         <PayPalScriptProvider options={{
                             'client-id': 'ATsXThlRKQMIDRsC0xX-EWt57Vg_FkznXcQNTrWdHgT-X2337ZiEuWGnnOgtubRXGfMJICcIOZ_lZ6aY&currency=MXN',
                         }}>
@@ -544,6 +551,21 @@ Total={total.total}
                                         throw error;
                                     }
                                 }}
+                                onApprove={async (data, actions: any) => {
+                                    // Aquí puedes realizar acciones adicionales cuando el pago es aprobado
+                                    console.log('Pago aprobado:', data);
+                                   const OrderId1 = data.orderID;
+                                    // console.log('order id ', data.orderID);
+                                  handleActualizarOrderID(OrderId1);
+                                  console.log("veremos si el orden se actualizo: ",orderID.orderID)
+                                    await handleSubmit();
+                                    return actions.order.capture();
+                                }}
+                                onCancel={(data: any) => {
+                                    // Aquí puedes realizar acciones adicionales cuando el usuario cancela el pago
+                                    console.log('Pago cancelado:', data);
+                                }}
+                                style={{ layout: 'horizontal' }}
                             // ... other PayPalButtons props
                             />
                         </PayPalScriptProvider>
