@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 
@@ -6,12 +6,36 @@ import { Chart, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 Chart.register(CategoryScale, LinearScale, BarElement, Title);
 
 function Charts() {
+  const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/user/grafica/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_usuario: 14 }),
+        });
+        const data = await response.json();
+        setChartData(data.data);
+        console.log(data.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  // Datos y opciones del gráfico
   const data = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+    labels: chartData ? chartData.map(item => item.mes) : [],
     datasets: [
       {
         label: 'Ventas 2024',
-        data: [12, 19, 3, 5, 2],
+        data: chartData ? chartData.map(item => item.cantidad) : [],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -32,6 +56,8 @@ function Charts() {
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: 'category',
@@ -44,9 +70,11 @@ function Charts() {
   };
 
   return (
-    <div>
-      <h1>Gráfico de Ventas Mensuales</h1>
-      <Bar data={data} options={options} />
+    <div style={{ width: '100%', height: '400px' }}>
+      <h1>TODO ESTO HAZ COMPRADO EN LOS ULTIMOS MESES</h1>
+      <div style={{ width: '100%', height: '100%' }}>
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 }
