@@ -1,6 +1,9 @@
 "use client"
 import React, { useState, ReactElement } from 'react';
-import Productos_panel_component from './Productos_panel_component'
+import Productos_panel_component from './Productos_panel_component';
+import User_panel_component from './User_panel_component';
+import Venta_producto_component from './venta_producto_component';
+import Venta_totales from './venta_totales';
 import Charts from './charts';
 function Panel(): ReactElement {
     const [content, setContent] = useState<ReactElement | null>(null);
@@ -31,7 +34,7 @@ function Panel(): ReactElement {
     const handleUsers = () => {
         setContent(
             <>
-
+<User_panel_component></User_panel_component>
             </>
         );
     };
@@ -39,169 +42,8 @@ function Panel(): ReactElement {
     const handleSales = () => {
         setContent(
             <>
-                <div className="text-xl font-bold mb-4 text-center">Ventas Totales</div>
-                <div className="overflow-x-auto">
-                    <div className="text-lg font-semibold mb-4 text-center">Total de ventas semanales</div>
-                    <div className="rounded-xl border border-gray-200 bg-white py-6 shadow-md max-h-80 overflow-y-auto">
-                        <table className="min-w-full max-w-full overflow-auto">
-                            <thead className="sticky top-0 bg-white">
-                                <tr>
-                                    <th className="px-4 py-2 text-center">Semana</th>
-                                    <th className="px-4 py-2 text-center">No. semana</th>
-                                    <th className="px-4 py-2 text-center">Mes</th>
-                                    <th className="px-4 py-2 text-center">Año</th>
-                                    <th className="px-4 py-2 text-center">Total ventas de la semana</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                    <td className="px-4 py-2 text-center">55</td>
-                                    <td className="px-4 py-2 text-center">1</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <br /><br /><br />
-
-                <h3 className="text-lg font-semibold mb-4 text-center">Total de Venta por Producto</h3>
-                <div className="rounded-xl border border-gray-200 bg-white py-6 shadow-md max-h-80 overflow-y-auto">
-                    <table className="min-w-full max-w-full overflow-auto">
-                        <thead className="sticky top-0 bg-white">
-                            <tr>
-                                <th className="px-4 py-2 text-center">Producto</th>
-                                <th className="px-4 py-2 text-center">Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                            <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>   <tr>
-                                <td className="px-4 py-2 text-center">1</td>
-                                <td className="px-4 py-2 text-center">55</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <br /><br /><br />
+             <Venta_producto_component></Venta_producto_component>
+             <Venta_totales></Venta_totales>
                 <Charts></Charts>
             </>
         );
