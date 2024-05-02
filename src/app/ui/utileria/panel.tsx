@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, ReactElement } from 'react';
-import Productos_panel_component from './Productos_panel_component'
 import Charts from './charts';
 function Panel(): ReactElement {
     const [content, setContent] = useState<ReactElement | null>(null);
@@ -23,7 +22,26 @@ function Panel(): ReactElement {
     const handleProducts = () => {
         setContent(
             <>
-                <Productos_panel_component></Productos_panel_component>
+                <div className="overflow-x-auto ">
+                    <h2 className="text-lg font-semibold mb-4">Lista de Productos</h2>
+                    <table className="min-w-full max-w-full overflow-auto">
+                        <thead className="sticky top-0 bg-white">
+                            <tr>
+                                <th className="px-4 py-2">Categoría</th>
+                                <th className="px-4 py-2">Stock</th>
+                                <th className="px-4 py-2">Proveedor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="bg-gray-100">
+                                {/* <td className="px-4 py-2"><img src="url_de_la_imagen" alt="Producto" className="h-12 w-12 object-cover rounded" /></td> */}
+                                <td className="px-4 py-2">Categoría A</td>
+                                <td className="px-4 py-2">10</td>
+                                <td className="px-4 py-2">Proveedor X</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </>
         );
     };
@@ -31,6 +49,95 @@ function Panel(): ReactElement {
     const handleUsers = () => {
         setContent(
             <>
+
+                <div className="rounded-xl border border-gray-200 bg-white py-6 px-4 shadow-md max-h-80 overflow-y-auto">
+                    <h2 className="text-lg font-semibold mb-4 text-center">Lista de Usuarios</h2>
+                    <div className="rounded-xl border border-gray-200 bg-white py-6 px-4 shadow-md max-h-100 overflow-y-auto">
+                        <table className="min-w-full max-w-full overflow-auto">
+                            <thead className="sticky top-0 bg-white">
+                                <tr>
+                                    <th className="px-4 py-2">Nombre</th>
+                                    <th className="px-4 py-2">Rol</th>
+                                    <th className="px-4 py-2">Asignar Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr className="bg-gray-100" >
+                                    <td className="px-4 py-2 text-center">Usuario 1</td>
+                                    <td className="px-4 py-2 text-center">Admin</td>
+                                    <td className="px-4 py-2 text-center">
+                                        <select className="px-4 py-2 text-center">
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
 
             </>
         );
