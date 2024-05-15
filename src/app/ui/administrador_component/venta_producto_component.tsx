@@ -11,7 +11,7 @@ const Venta_producto_component: React.FC = () =>  {
   const fetchData = async () => {
     try {
         const userId = getUserIdFromToken(token);
-        const apiUrl = 'http://localhost:3000/admin/ventasTotalesPorProducto/';
+        const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/ventasTotalesPorProducto/';
         const requestBody = {
             id_usuario: userId,
         };

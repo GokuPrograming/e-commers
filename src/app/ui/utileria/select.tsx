@@ -7,7 +7,7 @@ const CountrySelect: React.FC = () => {
     let id_pais;
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/pais'); // Ruta a tu API en Next.js
+            const response = await fetch('https://api-cuchau-store-pg.onrender.com/pais'); // Ruta a tu API en Next.js
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -27,7 +27,7 @@ const CountrySelect: React.FC = () => {
         if (id !== null) {
             console.log("es el ID= ", id);
             try {
-                const response = await fetch(`http://localhost:3000/estados/${id}`); // Ruta a tu otra API en Next.js
+                const response = await fetch(`https://api-cuchau-store-pg.onrender.com/estados/${id}`); // Ruta a tu otra API en Next.js
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

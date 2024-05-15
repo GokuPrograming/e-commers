@@ -15,7 +15,7 @@ function ListaPdf() {
             setIsLoading(true);
             try {
                 const userId = getUserIdFromToken(token);
-                const apiUrl = 'http://localhost:3000/user/MostrarPedido';
+                const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/MostrarPedido';
                 const requestBody = {
                     id_usuario: userId,
                 };

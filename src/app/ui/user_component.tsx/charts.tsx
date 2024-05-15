@@ -11,7 +11,7 @@ function Charts() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:3000/user/grafica/', {
+                const response = await fetch('https://api-cuchau-store-pg.onrender.com/user/grafica/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

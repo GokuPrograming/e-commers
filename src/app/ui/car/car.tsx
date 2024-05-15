@@ -34,7 +34,7 @@ const Cart: React.FC = () => {
       try {
         // Obtener el id_usuario del token
         setUserId(userIdFromToken);
-        const apiUrl = 'http://localhost:3000/user/car/total';
+        const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/car/total';
         // Realizar la solicitud POST a la API
         const response = await fetch(apiUrl, {
           method: 'POST',
@@ -99,7 +99,7 @@ const Cart: React.FC = () => {
   const removeFromCart = async (id_producto: number): Promise<void> => {
     const userIdFromToken = getUserIdFromToken(token || '');
     setUserId(userIdFromToken);
-    const apiUrl = 'http://localhost:3000/user/car/Delete_element';
+    const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/car/Delete_element';
     try {
       // Realizar la solicitud DELETE a la API
       const response = await fetch(apiUrl, {

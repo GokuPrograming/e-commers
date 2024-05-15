@@ -1,7 +1,7 @@
 
 export const Productos = async () => {
     try {
-        const response = await fetch('http://localhost:3000/product');
+        const response = await fetch('https://api-cuchau-store-pg.onrender.com/product');
         if (!response.ok) {
             throw new Error('No se pudo obtener los datos');
         }

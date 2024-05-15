@@ -86,7 +86,7 @@ const CheckoutForm: React.FC = () => {
     const fetchTotal = async () => {
         try {
             const userId = getUserIdFromToken(token);
-            const apiClient = 'http://localhost:3000/user/car/total';
+            const apiClient = 'https://api-cuchau-store-pg.onrender.com/user/car/total';
             const requestBody = {
                 id_usuario: userId,
             };
@@ -128,7 +128,7 @@ const CheckoutForm: React.FC = () => {
     //trae los datos de pais 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/pais');
+            const response = await fetch('https://api-cuchau-store-pg.onrender.com/pais');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -143,7 +143,7 @@ const CheckoutForm: React.FC = () => {
     const fetchInformacionCliente = async () => {
         try {
             const userId = getUserIdFromToken(token);
-            const apiClient = 'http://localhost:3000/informacionCliente';
+            const apiClient = 'https://api-cuchau-store-pg.onrender.com/informacionCliente';
             const requestBody = {
                 id_usuario: userId,
             };
@@ -209,7 +209,7 @@ const CheckoutForm: React.FC = () => {
         if (id !== null) {
             console.log("es el ID= ", id);
             try {
-                const response = await fetch(`http://localhost:3000/estados/${id}`); // Ruta a tu otra API en Next.js
+                const response = await fetch(`https://api-cuchau-store-pg.onrender.com/estados/${id}`); // Ruta a tu otra API en Next.js
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -252,7 +252,7 @@ const CheckoutForm: React.FC = () => {
 
     const handleProbarCupon = async () => {
         const userId = getUserIdFromToken(token); // Asegúrate de que esta función esté definida y token esté definido.
-        const apiUrl = 'http://localhost:3000/user/cupon';
+        const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/cupon';
 
         const requestBody = {
             codigo: cupon.cupon,
@@ -320,7 +320,7 @@ const CheckoutForm: React.FC = () => {
     //     console.log('cupon data:', cupon)
 
     //     const userId = getUserIdFromToken(token);
-    //     const apiUrl = 'http://localhost:3000/realizar_compra';
+    //     const apiUrl = 'https://api-cuchau-store-pg.onrender.com/realizar_compra';
     //     const requestBody = {
     //         id_usuario: userId,
     //         direccion: addressData.direccion,
@@ -368,7 +368,7 @@ const CheckoutForm: React.FC = () => {
             
 
             const userId = getUserIdFromToken(token);
-            const apiUrl = 'http://localhost:3000/realizar_compra';
+            const apiUrl = 'https://api-cuchau-store-pg.onrender.com/realizar_compra';
             const requestBody = {
                 id_usuario: userId,
                 direccion: addressData.direccion,
@@ -529,7 +529,7 @@ const CheckoutForm: React.FC = () => {
                             <PayPalButtons
                                 createOrder={async () => {
                                     try {
-                                        const response = await fetch('http://localhost:3000/api/create-order', {
+                                        const response = await fetch('https://api-cuchau-store-pg.onrender.com/api/create-order', {
                                             method: 'POST',
                                             headers: {
                                                 'Content-Type': 'application/json',

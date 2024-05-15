@@ -34,7 +34,7 @@ function Panel(): ReactElement {
     const handleUsers = () => {
         setContent(
             <>
-<User_panel_component></User_panel_component>
+                <User_panel_component></User_panel_component>
             </>
         );
     };
@@ -42,8 +42,8 @@ function Panel(): ReactElement {
     const handleSales = () => {
         setContent(
             <>
-             <Venta_producto_component></Venta_producto_component>
-             <Venta_totales></Venta_totales>
+                <Venta_producto_component></Venta_producto_component>
+                <Venta_totales></Venta_totales>
                 <Charts></Charts>
             </>
         );

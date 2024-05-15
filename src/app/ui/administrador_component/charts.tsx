@@ -20,7 +20,7 @@ function Charts() {
     }
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:3000/admin/graficaMesTotales/', {
+        const response = await fetch('https://api-cuchau-store-pg.onrender.com/admin/graficaMesTotales/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

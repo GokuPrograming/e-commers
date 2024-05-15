@@ -47,7 +47,7 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
         body: JSON.stringify({ id_pedido: pedidoId, id_usuario: user_id })
       };
 
-      const response = await fetch('http://localhost:3000/user/MostrarDatosDelPedido/', requestOptions);
+      const response = await fetch('https://api-cuchau-store-pg.onrender.com/user/MostrarDatosDelPedido/', requestOptions);
 
       if (!response.ok) {
         throw new Error('Error al obtener los datos');
@@ -71,7 +71,7 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
         body: JSON.stringify({ id_pedido: pedidoId, id_usuario: user_id })
       };
 
-      const response = await fetch('http://localhost:3000/user/MostrarDatosDelPedidoDireccion/', requestOptions);
+      const response = await fetch('https://api-cuchau-store-pg.onrender.com/user/MostrarDatosDelPedidoDireccion/', requestOptions);
 
       if (!response.ok) {
         throw new Error('Error al obtener los datos');

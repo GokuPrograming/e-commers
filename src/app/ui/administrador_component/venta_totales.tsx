@@ -10,42 +10,42 @@ const Venta_totales: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
-      try {
-          const userId = getUserIdFromToken(token);
-          const apiUrl = 'http://localhost:3000/admin/ventasSemanales/';
-          const requestBody = {
-              id_usuario: userId,
-          };
-  
-          const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`
-              },
-              body: JSON.stringify(requestBody)
-          });
-  
-          if (!response.ok) {
-              throw new Error('No se pudo obtener los datos');
-          }
-  
-          const responseData = await response.json();
-          console.log(responseData.data);  // Verifica los datos recibidos
-  
-          setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
-          setIsLoading(false);
-  
-      } catch (error) {
-          console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
-          setError(error instanceof Error ? error.message : String(error));
-          setIsLoading(false);
-      }
-  };
-  useEffect(() => {
-      fetchData();
-  }, []);
-  
+        try {
+            const userId = getUserIdFromToken(token);
+            const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/ventasSemanales/';
+            const requestBody = {
+                id_usuario: userId,
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error('No se pudo obtener los datos');
+            }
+
+            const responseData = await response.json();
+            console.log(responseData.data);  // Verifica los datos recibidos
+
+            setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
+            setIsLoading(false);
+
+        } catch (error) {
+            console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+            setError(error instanceof Error ? error.message : String(error));
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <>
             <div className="text-xl font-bold mb-4 text-center">Ventas Totales</div>
@@ -63,14 +63,14 @@ const Venta_totales: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        {datos.map((dato, index) => (
-                            <tr key={index}>
-                                <td className="px-4 py-2 text-center">{dato.semana}</td>
-                                <td className="px-4 py-2 text-center">{dato.semana_del_mes}</td>
-                                <td className="px-4 py-2 text-center">{dato.mes}</td>
-                                <td className="px-4 py-2 text-center">{dato.año}</td>
-                                <td className="px-4 py-2 text-center">{dato.total_ventas_semana}</td>
-                            </tr>))}
+                            {datos.map((dato, index) => (
+                                <tr key={index}>
+                                    <td className="px-4 py-2 text-center">{dato.semana}</td>
+                                    <td className="px-4 py-2 text-center">{dato.semana_del_mes}</td>
+                                    <td className="px-4 py-2 text-center">{dato.mes}</td>
+                                    <td className="px-4 py-2 text-center">{dato.año}</td>
+                                    <td className="px-4 py-2 text-center">{dato.total_ventas_semana}</td>
+                                </tr>))}
                         </tbody>
                     </table>
                 </div>

@@ -30,7 +30,7 @@ const ProductoComponent: React.FC = () => {
     const fetchData = async () => {
         try {
             const userId = getUserIdFromToken(token);
-            const apiUrl = 'http://localhost:3000/perfil_usuario';
+            const apiUrl = 'https://api-cuchau-store-pg.onrender.com/perfil_usuario';
             const requestBody = {
                 id_usuario: userId,
             };

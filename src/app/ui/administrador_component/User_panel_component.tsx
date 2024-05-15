@@ -12,7 +12,7 @@ const User_panel_component: React.FC = () => {
     const fetchData = async () => {
         try {
             const userId = getUserIdFromToken(token);
-            const apiUrl = 'http://localhost:3000/admin/panel_user/';
+            const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/panel_user/';
             const requestBody = {
                 id_usuario: userId,
             };

@@ -26,7 +26,7 @@ const PayPalComponent: React.FC<PayPalComponentProps> = () => {
                 <PayPalButtons
                     createOrder={async () => {
                         try {
-                            const response = await fetch('http://localhost:3000/api/create-order', {
+                            const response = await fetch('https://api-cuchau-store-pg.onrender.com/api/create-order', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
