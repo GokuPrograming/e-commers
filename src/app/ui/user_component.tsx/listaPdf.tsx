@@ -8,7 +8,7 @@ function ListaPdf() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const token = Cookies.get('token');
+    const token:any = Cookies.get('token');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,8 +36,8 @@ function ListaPdf() {
                 const responseData = await response.json();
                 setPedido(responseData.data);
                 setIsLoading(false);
-
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
                 setError(error instanceof Error ? error.message : String(error));
                 setIsLoading(false);

@@ -29,31 +29,34 @@ const ProductoComponent: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
         try {
-            const userId = getUserIdFromToken(token);
-            const apiUrl = 'https://api-cuchau-store-pg.onrender.com/perfil_usuario';
-            const requestBody = {
-                id_usuario: userId,
-            };
+            if (token) {
 
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(requestBody)
-            });
 
-            if (!response.ok) {
-                throw new Error('No se pudo obtener los datos');
+                const userId = getUserIdFromToken(token);
+                const apiUrl = 'https://api-cuchau-store-pg.onrender.com/perfil_usuario';
+                const requestBody = {
+                    id_usuario: userId,
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener los datos');
+                }
+
+                const responseData = await response.json();
+                console.log(responseData);  // Verifica los datos recibidos
+
+                setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
+                setIsLoading(false);
             }
-
-            const responseData = await response.json();
-            console.log(responseData);  // Verifica los datos recibidos
-
-            setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
-            setIsLoading(false);
-
         } catch (error) {
             console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
             setError(error instanceof Error ? error.message : String(error));

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 interface NavbarProps {
     onIconClick?: () => void;
@@ -41,7 +42,7 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
             <div className="px-4 py-3 md:px-8 flex justify-between items-center">
                 <div className="flex items-center">
                     <a className="flex items-center text-xl font-bold font-heading hover:text-indigo-600 transition-colors duration-300" href="#">
-                        <img src="https://th.bing.com/th/id/OIG4.FKjUYSWxUeGVAF0wIHlZ?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Logo" className="h-8 w-auto mr-2 rounded-full shadow-md" />
+                        <Image src="/img/page_img/logo.jpeg" alt="Logo" className="h-8 w-auto mr-2 rounded-full shadow-md" height={400} width={400} />
                         <h1 className="text-md font-semibold text-gray-600">Cuchau Store</h1>
                     </a>
                 </div>

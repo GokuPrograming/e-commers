@@ -17,12 +17,12 @@ interface ProductosDireccion {
   estado: string;
   codigo_postal: string;
   descripcion: string;
-  total:number;
+  total: number;
 }
 
 interface PDFProps {
   pedidoId: number;
- 
+
 }
 
 const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
@@ -35,12 +35,14 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
   const [error, setError] = useState<string | null>(null);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
 
-  const token = Cookies.get('token');
-  const user_id = getUserIdFromToken(token);
+  const token: any = Cookies.get('token');
+
 
   const productosData = async () => {
     setIsLoading(true);
     try {
+
+      const user_id = getUserIdFromToken(token);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,7 +59,8 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
       setProductos(data.data); // Update productos as an array
       setIsLoading(false);
       setDataLoaded(true); // Set dataLoaded to true when data is loaded successfully
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
       setIsLoading(false);
     }
@@ -65,6 +68,8 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
   const productosDataDireccion = async () => {
     setIsLoading(true);
     try {
+
+      const user_id = getUserIdFromToken(token);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -82,7 +87,8 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
       console.log(data.data)
       setIsLoading(false);
       setDataLoaded(true); // Set dataLoaded to true when data is loaded successfully
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
       setIsLoading(false);
     }
@@ -122,7 +128,7 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
 
         doc.text('Direccion: ', 15, 65);
         doc.text(purchase.direccion, 20, 70);
-///-------------------------------------------------------
+        ///-------------------------------------------------------
         doc.text('Ciudad: ', 100, 35);
         doc.text(purchase.ciudad, 105, 40);
 
@@ -132,7 +138,7 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
         doc.text('Total de la venta:', 100, 65);
         doc.text(purchase.total.toString(), 105, 70);
         // doc.text(purchase.nombre, margin + 2, currentY + 7);
-    
+
       });
       //
 
@@ -184,7 +190,7 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
   useEffect(() => {
     productosData();
     productosDataDireccion();
-  }, [pedidoId]);
+  },[pedidoId]);
 
   return (
     <div className="text-center my-4">

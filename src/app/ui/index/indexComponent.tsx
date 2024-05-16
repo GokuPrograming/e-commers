@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'; // Corrección en la importación
 import AdminNvar from '@/app/ui/Nvar/adminNvar';
+import Image from 'next/image';
 
 //validar para entrar a la cuenta
 const redirectToPage = (path: string) => {
@@ -23,7 +24,7 @@ function indexComponent() {
             redirectToPage('pages/Tienda');
         } else {
             // Si no hay un token válido, redirigir al usuario a la página principal
-         //   router.push('/pages/auth/login');
+            //   router.push('/pages/auth/login');
         }
     }, []);
     ///////
@@ -47,11 +48,28 @@ function indexComponent() {
                 </div>
                 <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
                     <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-                        <img
-                            className="h-20 w-20 object-contain rounded-full shadow-lg"
-                            src="https://th.bing.com/th/id/OIG4.877ZZGQtfsdMe952J33R?w=1024&h=1024&rs=1&pid=ImgDetMain"
-                            alt="Your Company"
-                        />
+
+                    <Image
+    className="h-20 w-20 object-contain rounded-full shadow-lg"
+    src="/img/page_img/logo.jpeg"
+    alt="Your Company"
+    width={400} // Establece un valor adecuado para el ancho de la imagen
+    height={400} // Establece un valor adecuado para la altura de la imagen
+/>
+
+
+
+
+                     
+
+                            {/* <Image
+                                src="https://th.bing.com/th/id/OIG1.wd_GRphO4taOCSmOMtUB?w=1024&h=1024&rs=1&pid=ImgDetMain"
+                                width={500}
+                              
+                                alt="Picture of the author"
+                            /> */}
+
+                        
                         <div className="mt-24 sm:mt-32 lg:mt-16">
                             <a href="#" className="inline-flex space-x-6">
                                 <span className="rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-800 ring-1 ring-inset ring-indigo-500/20">Que hay de nuevo</span>
@@ -64,7 +82,7 @@ function indexComponent() {
                             </a>
                         </div>
                         <h1 className="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">Todo lo que quieras y todo en lo que te puedas endeudar</h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">"¡Bienvenido a Cuchau Store, donde vendemos a precios que te dejarán con la boca abierta y ofrecemos un servicio tan lento que te preguntarás si hemos inventado la máquina del tiempo! ¡Porque aquí, lo único que corre rápido es nuestro descaro!"</p>
+                        <p className="mt-6 text-lg leading-8 text-gray-300">¡Bienvenido a Cuchau Store, donde vendemos a precios que te dejarán con la boca abierta y ofrecemos un servicio tan lento que te preguntarás si hemos inventado la máquina del tiempo! ¡Porque aquí, lo único que corre rápido es nuestro descaro!</p>
                         <div className="mt-10 flex items-center gap-x-6">
                             <a href="#" className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">VAMOS!! GASTA TU DINERO</a>
                             <a href="#" className="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a>
@@ -72,7 +90,7 @@ function indexComponent() {
                     </div>
                     <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
                         <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-                            <img src="https://th.bing.com/th/id/OIG1.wd_GRphO4taOCSmOMtUB?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="App screenshot" width="2432" height="1442" className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10" />
+                            <Image src="/img/page_img/banner.jpeg" alt="App screenshot" width="2432" height="1442" className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10" />
                         </div>
                     </div>
                 </div>

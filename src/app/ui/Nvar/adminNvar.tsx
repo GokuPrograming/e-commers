@@ -11,8 +11,11 @@ const useAdminNvar = () => {
 
   useEffect(() => {
     const token = Cookies.get('token');
-    const roleId = getrolIdFromToken(token);
-    setIdRol(roleId);
+    if (token) {
+      const roleId = getrolIdFromToken(token);
+      setIdRol(roleId);
+    }
+
   }, []);
 
   const renderNavbar = () => {

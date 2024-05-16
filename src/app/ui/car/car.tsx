@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { getUserIdFromToken } from '../authUtils'; // Importar la función de utilidad
 import Cupon from './cupon';
 import { fetchCartItems } from '@/app/api/carrito';
+import Image from 'next/image';
 
 interface CartItem {
   id_producto: number;
@@ -23,7 +24,6 @@ const Cart: React.FC = () => {
   const [total, setTotal] = useState<number | null>();
   const router = useRouter();
   const token = Cookies.get('token');
-  const userIdFromToken = getUserIdFromToken(token);
 
   useEffect(() => {
     if (!token) {
@@ -33,6 +33,9 @@ const Cart: React.FC = () => {
     const fetchTotalCar = async () => {
       try {
         // Obtener el id_usuario del token
+        if(token){
+          const userIdFromToken = getUserIdFromToken(token);
+          
         setUserId(userIdFromToken);
         const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/car/total';
         // Realizar la solicitud POST a la API
@@ -60,7 +63,7 @@ const Cart: React.FC = () => {
           console.log("la respuesta ", parsedTotal);
         }
         setLoading(false);
-
+      }
       } catch (error) {
         console.error('Error al obtener los productos del carrito:', error);
         setLoading(false);
@@ -80,7 +83,7 @@ const Cart: React.FC = () => {
 
     fetchData();
 
-  }, [token]);
+  }, [token, router]);
   const handleToPedido = async () => {
     const token = Cookies.get('token');
     if (!token) {
@@ -145,7 +148,7 @@ const Cart: React.FC = () => {
               <li key={item.id_producto} className="border-b border-gray-200 py-4">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
-                    <img src={""} alt={""} className="w-16 h-16 object-cover rounded-md" />
+                    <Image src={""} alt={""} className="w-16 h-16 object-cover rounded-md" ></Image>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">{""}</h3>
                       <p className="text-gray-600">ID: {item.producto}</p>

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, ReactElement } from 'react';
-import Charts from './charts';
+// import Charts from './charts';
 function Panel(): ReactElement {
     const [content, setContent] = useState<ReactElement | null>(null);
     const [isMobile, setIsMobile] = useState(false);
@@ -309,7 +309,7 @@ function Panel(): ReactElement {
                     </table>
                 </div>
                 <br /><br /><br />
-                <Charts></Charts>
+                {/* <Charts></Charts> */}
             </>
         );
     };

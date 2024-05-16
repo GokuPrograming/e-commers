@@ -9,7 +9,7 @@ export const getrolIdFromToken = (token: string): number | null => {
        // console.log(decodedToken.id_rol)
        return decodedToken.id_rol;
     } catch (error) {
-        console.error('Error al verificar el token:', error.message);
+        // console.error('Error al verificar el token:', error.message);
         return null;
     }
 };

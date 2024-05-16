@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
-
+interface ChartDataItem {
+  mes: number;
+  total_ventas_mes:any;
+  // Agrega otras propiedades según la estructura de tus datos
+}
 // Registrar los elementos y escalas necesarios
 Chart.register(CategoryScale, LinearScale, BarElement, Title);
 
+
 function Charts() {
   const [chartSize, setChartSize] = useState({ width: 600, height: 400 }); // Tamaño predeterminado
-  const [chartData, setChartData] = useState(null);
+  // const [chartData, setChartData] = useState(null);
+  const [chartData, setChartData] = useState<ChartDataItem[]>([]);
 
   useEffect(() => {
     function handleResize() {
@@ -49,11 +55,11 @@ function Charts() {
   }, []);
 
   const data = {
-    labels: chartData ? chartData.map(item => item.mes_numero) : [],  
-      datasets: [
+    labels: chartData ? chartData.map((item: { mes: any; }) => item.mes) : [],        
+    datasets: [
         {
             label: 'Ventas 2024',
-            data: chartData ? chartData.map(item => item.total_ventas_mes) : [],
+            data: chartData ? chartData.map((item: { total_ventas_mes: any; }) => item.total_ventas_mes) : [],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -75,21 +81,19 @@ function Charts() {
 
   const options = {
     plugins: {
-        legend: {
-            display: true,
-            position: 'top',
-        },
+     
     },
-    scales: {
-        x: {
-            type: 'category',
-            beginAtZero: true,
-        },
-        y: {
-            beginAtZero: true,
-        },
-    },
-};
+    // scales: {
+    //   x: {
+    //     type: "category",
+    //     beginAtZero: true,
+    //   },
+    //   y: {
+    //     beginAtZero: true,
+    //   },
+    // },
+  };
+  
 
   return (
     <div className="">

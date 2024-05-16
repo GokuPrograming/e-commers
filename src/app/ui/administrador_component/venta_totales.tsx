@@ -11,6 +11,7 @@ const Venta_totales: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
         try {
+            if(token){
             const userId = getUserIdFromToken(token);
             const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/ventasSemanales/';
             const requestBody = {
@@ -35,7 +36,7 @@ const Venta_totales: React.FC = () => {
 
             setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
             setIsLoading(false);
-
+        }
         } catch (error) {
             console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
             setError(error instanceof Error ? error.message : String(error));

@@ -13,6 +13,7 @@ const Productos_panel_component: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
         try {
+            if(token){
             const userId = getUserIdFromToken(token);
             const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/almacen/';
             const requestBody = {
@@ -37,7 +38,7 @@ const Productos_panel_component: React.FC = () => {
 
             setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
             setIsLoading(false);
-
+        }
         } catch (error) {
             console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
             setError(error instanceof Error ? error.message : String(error));

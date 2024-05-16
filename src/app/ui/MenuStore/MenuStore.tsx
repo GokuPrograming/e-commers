@@ -20,13 +20,16 @@ const MenuStore: React.FC = () => {
     useEffect(() => {
         const token = Cookies.get('token');
         if (!token) {
-           // router.push('/pages/auth/login');
-           loadData(setProductos, setIsLoading, setError);
+            // router.push('/pages/auth/login');
+            if (isLoading) {
+                loadData(setProductos, setIsLoading, setError);
+            }
         } else {
-            isLoading
-            loadData(setProductos, setIsLoading, setError);
+            if (isLoading) {
+                loadData(setProductos, setIsLoading, setError);
+            }
         }
-    }, []);
+    }, [isLoading, router]);
 
     const handleAddToCart = async () => {
         const token = Cookies.get('token');

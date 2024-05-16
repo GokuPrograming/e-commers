@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
-
+interface ChartDataItem {
+    mes: any;
+    cantidad:any;
+    // Agrega otras propiedades según la estructura de tus datos
+  }
 // Registrar los elementos y escalas necesarios
 Chart.register(CategoryScale, LinearScale, BarElement, Title);
 
 function Charts() {
-    const [chartData, setChartData] = useState(null);
+    // const [chartData, setChartData] = useState(null);
+    const [chartData, setChartData] = useState<ChartDataItem[]>([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -57,20 +62,20 @@ function Charts() {
 
     const options = {
         plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-            },
+            // legend: {
+            //     display: true,
+            //     position: 'top',
+            // },
         },
-        scales: {
-            x: {
-                type: 'category',
-                beginAtZero: true,
-            },
-            y: {
-                beginAtZero: true,
-            },
-        },
+        // scales: {
+        //     x: {
+        //         type: 'category',
+        //         beginAtZero: true,
+        //     },
+        //     y: {
+        //         beginAtZero: true,
+        //     },
+        // },
     };
 
     return (

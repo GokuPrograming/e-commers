@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 interface NavbarProps {
@@ -44,7 +44,7 @@ const Nvar3: React.FC<NavbarProps> = ({ onIconClick }) => {
         <nav className="flex justify-between bg-gray-900 text-white w-full">
             <div className="px-4 xl:px-8 py-6 flex w-full items-center max-w-screen-xl mx-auto">
                 <a className="flex items-center text-3xl font-bold font-heading hover:text-indigo-600 transition-colors duration-300" href="#">
-                    <img src="https://th.bing.com/th/id/OIG4.FKjUYSWxUeGVAF0wIHlZ?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Logo" className="h-10 w-auto mr-2 rounded-full shadow-md" />
+                    <Image src="/img/page_img/logo.jpeg" alt="Logo" className="h-10 w-auto mr-2 rounded-full shadow-md"  width={400} height={400}></Image>
                     <span className="text-gray-800"></span>
                     <h1 className="ml-4 text-lg font-semibold text-gray-600">Cuchau Store</h1>
                 </a>

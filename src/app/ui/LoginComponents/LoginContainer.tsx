@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { login } from '../../api/loginApi'// Importar la función login desde el archivo loginApi
 import router from 'next/navigation';
-
+import Image from 'next/image';
 const LoginContainer: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -49,7 +49,7 @@ const LoginContainer: React.FC = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="flex flex-col items-center justify-center max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <div className="rounded-full overflow-hidden w-24 h-24 mb-4">
-                    <img src="https://th.bing.com/th/id/OIG4.uGuC_WVR80SEIX63vhfB?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Logo" className="w-full h-full" />
+                    <Image src="/img/page_img/logo.jpeg" alt="Logo" className="w-full h-full"  width={400} height={400} />
                 </div>
                 {isLoggedIn ? (
                     <>
