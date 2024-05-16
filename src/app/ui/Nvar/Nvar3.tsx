@@ -1,98 +1,123 @@
-"use client"
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
 
 interface NavbarProps {
     onIconClick?: () => void;
 }
 
-const Nvar3: React.FC<NavbarProps> = ({ onIconClick }) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Añade el estado isMenuOpen
-    const [isFullScreen, setIsFullScreen] = useState(false);
+const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const handleIconClick = () => {
-        if (onIconClick) {
-            onIconClick();
-        }
-        setIsMenuOpen(!isMenuOpen); // Cambiar el estado del menú al hacer clic en el icono
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
-    const handleCloseMenu = () => {
-        setIsMenuOpen(false); // Cierra el menú al hacer clic en el botón de "Cerrar"
+    const handlerPerfil = () => {
+        redirectToPage('/pages/perfil');
     };
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 1024) {  // Define el ancho de pantalla para "full screen"
-                setIsMenuOpen(false);  // Cierra el menú si la pantalla es "full screen"
-                setIsFullScreen(true);
-            } else {
-                setIsFullScreen(false);
-            }
-        };
 
-        // Escuchar cambios en el tamaño de la ventana
-        window.addEventListener('resize', handleResize);
+    const handleLogout = () => {
+        Cookies.remove('token');
+        Cookies.remove('user');
 
-        // Limpia el evento al desmontar el componente
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+        setIsLoggedIn(false);
+        redirectToPage('/pages/auth/login');
+    };
+
+    const redirectToPage = (path: string) => {
+        window.location.href = path;
+    };
+
+    const handlerStore = () => {
+        redirectToPage('/pages/Tienda');
+    };
+    const handlerLogin = () => {
+        redirectToPage('/pages/auth/login');
+    };
 
     return (
+        <nav className="bg-gray-900 text-white w-full">
+            <div className="px-4 py-3 md:px-8 flex justify-between items-center">
+                <div className="flex items-center">
+                    <a className="flex items-center text-xl font-bold font-heading hover:text-indigo-600 transition-colors duration-300" href="#">
+                        <Image src="/img/page_img/logo.jpeg" alt="Logo" className="h-8 w-auto mr-2 rounded-full shadow-md" height={400} width={400} />
+                        <h1 className="text-md font-semibold text-gray-600">Cuchau Store</h1>
+                    </a>
+                </div>
+                <div className="hidden md:flex items-center space-x-4">
+                    <ul className="flex space-x-8 font-semibold font-heading">
+                        <li><Link href={'/pages/Tienda'}>Tienda</Link></li>
+                        <li><a className="hover:text-gray-200" href="#">Categoria</a></li>
+                        <li><a className="hover:text-gray-200" href="{'/pages/auth/login'}">Login</a></li>
+                    </ul>
+                    {/* <button className="flex items-center" onClick={handlerGoCarrito}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#fff">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span className="ml-2 text-sm">Carrito</span>
+                    </button> */}
+                    {/* <button className="" onClick={handleLogout}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512" style={{ fill: 'none', stroke: '#fff', strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: '32px' }}>
+                            <path d="M320,176V136a40,40,0,0,0-40-40H88a40,40,0,0,0-40,40V376a40,40,0,0,0,40,40H280a40,40,0,0,0,40-40V336" />
+                            <polyline points="384 176 464 256 384 336" />
+                            <line x1="191" y1="256" x2="464" y2="256" />
+                        </svg>
+                    </button> */}
+                    {/* <button className="text-white focus:outline-none" onClick={handlerPerfil}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6a4 4 0 100 8 4 4 0 000-8z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a8 8 0 11-16 0 8 8 0 0116 0z" />
+                        </svg>
+                    </button> */}
 
-        <nav className="flex justify-between bg-gray-900 text-white w-full">
-            <div className="px-4 xl:px-8 py-6 flex w-full items-center max-w-screen-xl mx-auto">
-                <a className="flex items-center text-3xl font-bold font-heading hover:text-indigo-600 transition-colors duration-300" href="#">
-                    <Image src="/img/page_img/logo.jpeg" alt="Logo" className="h-10 w-auto mr-2 rounded-full shadow-md"  width={400} height={400}></Image>
-                    <span className="text-gray-800"></span>
-                    <h1 className="ml-4 text-lg font-semibold text-gray-600">Cuchau Store</h1>
-                </a>
-                <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-                    <li><a className="hover:text-gray-200" href="#">Home</a></li>
-                    <li><Link className="hover:text-gray-200" href={'/pages/car'}>Carrito</Link> </li>
-                    <li><a className="hover:text-gray-200" href={'/pages/auth/login'}>Iniciar Sesion</a></li>
-                    <li><a className="hover:text-gray-200" href="#">Collections</a></li>
-                    <li><a className="hover:text-gray-200" href="#">Contact Us</a></li>
-                </ul>
-                {/* Menú desplegable para tamaños de pantalla pequeños */}
-                {!isFullScreen && isMenuOpen && (
-
-                    <div className="fixed inset-0 bg-gray-800 opacity-90 z-50">
-                        <div className="flex justify-end pr-4 pt-4">
-                            <button className="text-white" onClick={handleCloseMenu}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <ul className="flex flex-col space-y-4 text-center pt-8">
-                            <li><a className="hover:text-gray-200" href="#">Home</a></li>
-                            <li><Link className="hover:text-gray-200" href={'/pages/car'}>Carrito</Link></li>
-                            <li><a className="hover:text-gray-200" href={'/pages/auth/login'}>Iniciar Sesion</a></li>
-                            <li><a className="hover:text-gray-200" href="#">Collections</a></li>
-                            <li><a className="hover:text-gray-200" href="#">Contact Us</a></li>
-                        </ul>
-                    </div>
-
-                )}
-
+                </div>
+                <div className="md:hidden flex items-center">
+                    <button className="text-white focus:outline-none" onClick={toggleMenu}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            {/* Responsive Navbar */}
-            <div className='hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12' >
-                <button className="xl:hidden flex mr-6 items-center" onClick={handleIconClick}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+                <ul className="px-4 py-2 space-y-2">
+                    <li>
+                        <a className="block hover:text-gray-200" href="/pages/Tienda">
+                            Tienda
+                        </a>
+                    </li>
+      
+                </ul>
+                <button className="flex items-center px-4 py-2 space-x-2" onClick={handlerStore}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#fff">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
+                    <span>Tienda</span>
                 </button>
-                <button className="navbar-burger self-center mr-12 xl:hidden" onClick={handleIconClick}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                <button className="flex items-center px-4 py-2 space-x-2" onClick={handlerLogin}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512" style={{ fill: 'none', stroke: '#fff', strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: '32px' }}>
+                        <path d="M320,176V136a40,40,0,0,0-40-40H88a40,40,0,0,0-40,40V376a40,40,0,0,0,40,40H280a40,40,0,0,0,40-40V336" />
+                        <polyline points="384 176 464 256 384 336" />
+                        <line x1="191" y1="256" x2="464" y2="256" />
                     </svg>
+                    <span>Iniciar Sesion</span>
                 </button>
+                {/* <button className="flex items-center px-4 py-2 space-x-2" >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6a4 4 0 100 8 4 4 0 000-8z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a8 8 0 11-16 0 8 8 0 0116 0z" />
+                    </svg>
+                    <span>Perfil</span>
+                </button> */}
+
             </div>
         </nav>
+
+
+
     );
 };
 
-export default Nvar3;
+export default Nvar2;
