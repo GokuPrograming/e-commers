@@ -10,7 +10,7 @@ import { getrolIdFromToken } from '../getrolID';
 //api
 import { loadData } from '@/app/api/Todos_los_productos'; // Asegúrate de que la ruta de importación sea correcta
 
-const token = Cookies.get('token');
+const token: any = Cookies.get('token');
 const MenuStore: React.FC = () => {
     const [productos, setProductos] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ const MenuStore: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const token = Cookies.get('token');
+    
         if (!token) {
             // router.push('/pages/auth/login');
             if (isLoading) {
@@ -32,8 +32,9 @@ const MenuStore: React.FC = () => {
     }, [isLoading, router]);
 
     const handleAddToCart = async () => {
-        const token = Cookies.get('token');
+      
         if (!token) {
+            console.log("no hay token")
             router.push('/pages/auth/login');
             return;
         }

@@ -50,7 +50,7 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
                     <ul className="flex space-x-8 font-semibold font-heading">
                         <li><Link href={'/pages/Tienda'}>Tienda</Link></li>
                         <li><a className="hover:text-gray-200" href="#">Categoria</a></li>
-                        <li><a className="hover:text-gray-200" href="{'/pages/auth/login'}">Login</a></li>
+                        <li><a className="hover:text-gray-200" href={'/pages/auth/login'}>Login</a></li>
                     </ul>
                     {/* <button className="flex items-center" onClick={handlerGoCarrito}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#fff">
