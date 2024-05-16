@@ -109,7 +109,7 @@ function Panel(): ReactElement {
                 }}>
                     <option value="Productos">Productos</option>
                     <option value="PDF">PDF</option>
-                    <option value="Estadísticas">Charts</option>
+                    <option value="C">Charts</option>
                 </select>
             </nav>
 

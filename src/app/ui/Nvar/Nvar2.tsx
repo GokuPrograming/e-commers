@@ -83,7 +83,7 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
             <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
                 <ul className="px-4 py-2 space-y-2">
                     <li>
-                        <a className="block hover:text-gray-200" href="#">
+                        <a className="block hover:text-gray-200" href="/pages/Tienda">
                             Tienda
                         </a>
                     </li>
