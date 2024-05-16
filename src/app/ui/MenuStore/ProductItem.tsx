@@ -2,6 +2,10 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { getUserIdFromToken } from '../authUtils';
+import { useRouter } from 'next/navigation'; // Corrección en la importación
+
+
+
 // const token = Cookies.get('token');
 import Image from 'next/image'
 type Product = {
@@ -21,6 +25,7 @@ type ProductItemProps = {
 
 const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
     const [count, setCount] = useState(1);
+    const router = useRouter();
 
     // Asegúrate de inicializarlo con los datos del producto que recibes como prop
 
@@ -44,7 +49,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
     // Función manejadora para el clic del botón
     const handleAddToCartClick = async () => {
         const token = Cookies.get('token');
-
+        if (!token) {
+            console.log("no hay token");
+            alert("no ah iniciado sesion")
+            router.push('/pages/auth/login');
+            return;
+        }
         if (token) {
             const userId = getUserIdFromToken(token);
             onAddToCart(producto.id_producto);

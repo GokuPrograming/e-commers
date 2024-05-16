@@ -10,7 +10,7 @@ import { getrolIdFromToken } from '../getrolID';
 //api
 import { loadData } from '@/app/api/Todos_los_productos'; // Asegúrate de que la ruta de importación sea correcta
 
-const token: any = Cookies.get('token');
+const token = Cookies.get('token');
 const MenuStore: React.FC = () => {
     const [productos, setProductos] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,8 @@ const MenuStore: React.FC = () => {
     useEffect(() => {
     
         if (!token) {
-            // router.push('/pages/auth/login');
+            console.log("este es el token",token)
+            //  router.push('/pages/auth/login');
             if (isLoading) {
                 loadData(setProductos, setIsLoading, setError);
             }
@@ -29,21 +30,9 @@ const MenuStore: React.FC = () => {
                 loadData(setProductos, setIsLoading, setError);
             }
         }
-    }, [isLoading, router]);
+    }, [isLoading]);
 
     const handleAddToCart = async () => {
-      
-        if (!token) {
-            console.log("no hay token")
-            router.push('/pages/auth/login');
-            return;
-        }
-        const userId = getUserIdFromToken(token); // Utilizar la función de utilidad
-        if (!userId) {
-            console.error('Error al obtener el id_usuario del token');
-            return;
-        }
-        // Llamar a fetchData nuevamente para actualizar los datos
         loadData(setProductos, setIsLoading, setError);
     }
 
