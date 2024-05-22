@@ -1,12 +1,13 @@
+"use client"
 import React from 'react'
-
+import Charts  from "@/app/ui/administrador_component/charts";
 function Plantilla_Admin_panel_component() {
     return (
 
         <div>
 
             <div className="flex overflow-hidden bg-white pt-16">
-                <aside id="sidebar" className="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
+                {/* <aside id="sidebar" className="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
                     <div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
                         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <div className="flex-1 px-3 bg-white divide-y space-y-1">
@@ -86,9 +87,9 @@ function Plantilla_Admin_panel_component() {
                             </div>
                         </div>
                     </div>
-                </aside>
-                <div className="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
-                <div id="main-content" className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+                </aside> */}
+                {/* <div className="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div> */}
+                <div id="main-content" className="h-full w-full bg-gray-50 relative overflow-y-auto ">
                     <main>
                         <div className="pt-6 px-4">
                             <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
@@ -100,12 +101,11 @@ function Plantilla_Admin_panel_component() {
                                         </div>
                                         <div className="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
                                             12.5%
-                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                                            </svg>
+                                           
                                         </div>
+                                       
                                     </div>
-                                    <div id="main-chart"></div>
+                                    <div id="main-chart"> <Charts></Charts></div>
                                 </div>
                                 <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                                     <div className="mb-4 flex items-center justify-between">

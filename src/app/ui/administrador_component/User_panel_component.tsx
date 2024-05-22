@@ -47,9 +47,10 @@ const User_panel_component: React.FC = () => {
         fetchData();
     }, []);
     return (
-        <div className="rounded-xl border border-gray-200 bg-white py-6 px-4 shadow-md max-h-80 overflow-y-auto">
+        <div>
             <h2 className="text-lg font-semibold mb-4 text-center">Lista de Usuarios</h2>
-            <div className="rounded-xl border border-gray-200 bg-white py-6 px-4 shadow-md max-h-100 overflow-y-auto">
+            <div className="rounded-xl  bg-white py-6 px-4 shadow-md max-h-80 overflow-y-auto">
+            <div className="rounded-xl  bg-white py-6 px-4 shadow-md max-h-100 overflow-y-auto">
                 <table className="min-w-full max-w-full overflow-auto">
                     <thead className="sticky top-0 bg-white">
                         <tr>
@@ -58,7 +59,7 @@ const User_panel_component: React.FC = () => {
                             <th className="px-4 py-2">Asignar Rol</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className=''>
                         {datos.map((dato, index) => (
                             <tr className="bg-gray-100" key={index} >
                                 <td className="px-4 py-2 text-center">{dato.nombre}</td>
@@ -78,6 +79,8 @@ const User_panel_component: React.FC = () => {
             </div>
 
         </div>
+        </div>
+     
     )
 }
 

@@ -5,7 +5,7 @@ export default function page() {
     return (
         <div>
             <Panel></Panel>
-            <Admin_panel_component></Admin_panel_component>
+           
         </div>
     )
 }

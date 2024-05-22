@@ -4,6 +4,7 @@ import Productos_panel_component from './Productos_panel_component';
 import User_panel_component from './User_panel_component';
 import Venta_producto_component from './venta_producto_component';
 import Venta_totales from './venta_totales';
+import Plantilla_Admin_panel_component from "@/app/ui/admin_panel/pantilla_admin";
 import Charts from './charts';
 function Panel(): ReactElement {
     const [content, setContent] = useState<ReactElement | null>(null);
@@ -56,12 +57,14 @@ function Panel(): ReactElement {
                 <p>Total de Clientes Registrados: 100</p>
                 <p>Total de Órdenes: 500</p>
                 <p>Total de Productos Comprados: 1000</p>
+
+                <Plantilla_Admin_panel_component></Plantilla_Admin_panel_component>
             </>
         );
     };
 
     return (
-        <div className="use-client">
+        <div className="use-client ">
             {/* User profile header */}
             <header className="bg-white shadow-sm">
                 <div className="py-3 md:px-8 flex justify-center items-center">
@@ -119,12 +122,13 @@ function Panel(): ReactElement {
             </nav>
 
             <br /><br />
-            <main className="container mx-auto flex items-center justify-center">
-                <div className="max-w-xl">
+            <main className="flex justify-center w-full items-center">
+                <div className=" justify-center items-center">
                     {content ? content : (
                         <><br />
-                            <h2 className="text-2xl mb-4 px-6 py-4 text-center">Bienvenido Usuario Administrador</h2>
+                            <h2 className="text-2xl  px-6 py-4 text-center">Bienvenido Usuario Administrador</h2>
                             <p className="text-gray-600 text-center">Administra con pasión, lidera con compasión</p>
+                            <Plantilla_Admin_panel_component></Plantilla_Admin_panel_component>
                         </>
                     )}
                 </div>

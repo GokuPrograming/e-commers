@@ -22,7 +22,7 @@ function Panel(): ReactElement {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleProducts = () => {
+    const handlePersonaData = () => {
         setContent(
             <>
                 <ProductoComponent />
@@ -70,7 +70,7 @@ function Panel(): ReactElement {
                     <div className="flex justify-between items-center mt-2">
                         <div>
                             <span className="text-sm text-gray-600">Bienvenido, </span>
-                            <span className="font-semibold">Nombre del Usuario</span>
+                            <span className="font-semibold">Tu panel personal</span>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ function Panel(): ReactElement {
             <nav className="md:flex items-center justify-center space-x-4 w-full">
                 <ul className="hidden md:flex space-x-8 font-semibold font-heading">
                     <li className="mr-4">
-                        <button onClick={handleProducts} className="px-4 py-2 hover:bg-gray-700">Productos</button>
+                        <button onClick={handlePersonaData} className="px-4 py-2 hover:bg-gray-700">Datos Personales</button>
                     </li>
                     <li className="mr-4">
                         <button onClick={handlerPDF} className="px-4 py-2 hover:bg-gray-700">PDF</button>
@@ -94,7 +94,7 @@ function Panel(): ReactElement {
                     const selectedOption = e.target.value;
                     switch (selectedOption) {
                         case 'Productos':
-                            handleProducts();
+                            handlePersonaData();
                             break;
                         case 'PDF':
                             handlerPDF();
@@ -107,9 +107,9 @@ function Panel(): ReactElement {
                             break;
                     }
                 }}>
-                    <option value="Productos">Productos</option>
+                    <option value="Productos">Datos Personales</option>
                     <option value="PDF">PDF</option>
-                    <option value="C">Charts</option>
+                    <option value="Charts">Graficos</option>
                 </select>
             </nav>
 
@@ -118,8 +118,8 @@ function Panel(): ReactElement {
                 <div className="max-w-xl">
                     {content ? content : (
                         <><br />
-                            <h2 className="text-2xl mb-4 px-6 py-4 text-center">Bienvenido Usuario Administrador</h2>
-                            <p className="text-gray-600 text-center">Administra con pasión, lidera con compasión</p>
+                            <h2 className="text-2xl mb-4 px-6 py-4 text-center">Bienvenido Usuario</h2>
+                            <p className="text-gray-600 text-center"></p>
                         </>
                     )}
                 </div>
