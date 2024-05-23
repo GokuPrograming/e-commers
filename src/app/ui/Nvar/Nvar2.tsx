@@ -33,6 +33,9 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
     const handlerGoCarrito = () => {
         redirectToPage('/pages/car');
     };
+    const handlerPanelAdministrador = () => {
+        redirectToPage('/pages/administrador');
+    };
     const handlerGoStore = () => {
         redirectToPage('/pages/Tienda');
     };
@@ -87,6 +90,11 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
                             Tienda
                         </a>
                     </li>
+                    {/* <li>
+                        <a className="block hover:text-gray-200" href="/pages/administrador">
+                            Administrador
+                        </a>
+                    </li> */}
                     <li>
                         <a className="block hover:text-gray-200" href="#">
                             Categoria
@@ -114,7 +122,6 @@ const Nvar2: React.FC<NavbarProps> = ({ onIconClick }) => {
                     </svg>
                     <span>Perfil</span>
                 </button>
-
             </div>
         </nav>
 

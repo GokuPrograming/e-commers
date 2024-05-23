@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { login } from '../../api/loginApi'// Importar la función login desde el archivo loginApi
 import router from 'next/navigation';
-import Image from 'next/image';
+import Image from 'next/image'; 
 const LoginContainer: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [error, setError] = useState<string | null>(null);
