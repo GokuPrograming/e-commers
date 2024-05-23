@@ -38,7 +38,7 @@ const RegistroComponent: React.FC = () => {
         try {
             console.log(data);
             // const response = await fetch('https://api-cuchau-store-pg.onrender.com/usuario/registro', 
-            const response = await fetch('http://localhost:3002/usuario/registro',{
+            const response = await fetch('https://api-cuchau-store-pg.onrender.com/usuario/registro',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
