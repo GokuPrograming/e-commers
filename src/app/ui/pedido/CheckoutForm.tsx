@@ -417,12 +417,12 @@ if(id){
                             value={personalData.telefono}
                             onChange={handleInputChange(setPersonalData, 'telefono')}
                         />
-                        <TextField
+                        {/* <TextField
                             label="Total"
                             fullWidth
                             value={total.total}
                         //onChange={handleInputChange(setPersonalData, 'telefono')}
-                        />
+                        /> */}
 
                     </Grid>
                 );

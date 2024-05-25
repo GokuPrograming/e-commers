@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation'; // Corrección en la importación
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { getUserIdFromToken } from '../authUtils'; // Importar la función de utilidad
-import Cupon from './cupon';
 import { fetchCartItems } from '@/app/api/carrito';
 import Image from 'next/image';
 
@@ -139,7 +138,7 @@ const Cart: React.FC = () => {
   return (
     <div className="container mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Carrito de Compra</h1>
-      <p className="text-gray-600 mb-4">ID de usuario: {userId}</p>
+      {/* <p className="text-gray-600 mb-4">ID de usuario: {userId}</p> */}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-2">
@@ -171,7 +170,7 @@ const Cart: React.FC = () => {
               </li>
             ))}
           </ul>
-          <Cupon></Cupon>
+          {/* <Cupon></Cupon> */}
         </div>
 
         <div className="col-span-1">

@@ -5,6 +5,6 @@ export default function page() {
     return (
         <div>
             <Car></Car>
-            car</div>
+            </div>
     )
 }

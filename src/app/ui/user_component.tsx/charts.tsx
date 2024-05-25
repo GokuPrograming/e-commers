@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
+import { getUserIdFromToken } from '../authUtils';
+import Cookies from 'js-cookie';
 import { Chart, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 interface ChartDataItem {
     mes: any;
@@ -8,11 +10,12 @@ interface ChartDataItem {
   }
 // Registrar los elementos y escalas necesarios
 Chart.register(CategoryScale, LinearScale, BarElement, Title);
+const token:any = Cookies.get('token');
 
 function Charts() {
     // const [chartData, setChartData] = useState(null);
     const [chartData, setChartData] = useState<ChartDataItem[]>([]);
-
+    const userId = getUserIdFromToken(token);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -21,7 +24,7 @@ function Charts() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ id_usuario: 14 }),
+                    body: JSON.stringify({ id_usuario: userId }),
                 });
                 const data = await response.json();
                 setChartData(data.data);

@@ -53,10 +53,10 @@ function Panel(): ReactElement {
     const handleStatistics = () => {
         setContent(
             <>
-                <h2>Estadísticas Generales</h2>
+                {/* <h2>Estadísticas Generales</h2>
                 <p>Total de Clientes Registrados: 100</p>
                 <p>Total de Órdenes: 500</p>
-                <p>Total de Productos Comprados: 1000</p>
+                <p>Total de Productos Comprados: 1000</p> */}
 
                 <Plantilla_Admin_panel_component></Plantilla_Admin_panel_component>
             </>

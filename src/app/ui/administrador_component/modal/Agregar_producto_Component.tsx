@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, ChangeEvent } from "react";
+
 import Image from "next/image";
 import {
   Modal,
@@ -12,37 +13,59 @@ import {
 
 const Agregar_producto_Component: React.FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [ruta, setRuta] = useState("ruta");
+
+  const actualiza = (e: ChangeEvent<HTMLInputElement>) => {
+    const nombre = e.target.files?.[0]?.name;
+    if (nombre) {
+      console.log(nombre);
+      //setRuta("http://localhost:8080/evidencia/" + nombre);
+    }
+  };
   return (
     <>
       <Button
         onClick={onOpen}
         className="bg-green-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-      >Agregar productos
-       <Image
-                  className="pl-2 object-contain shadow-lg"
-                  src="/img/page_img/plus.png"
-                  alt="agregar productos"
-                  width={30} // Establece un valor adecuado para el ancho de la imagen
-                  height={30} // Establece un valor adecuado para la altura de la imagen
-                />
+      >
+        Agregar productos
+        <Image
+          className="pl-2 object-contain shadow-lg"
+          src="/img/page_img/plus.png"
+          alt="agregar productos"
+          width={30} // Establece un valor adecuado para el ancho de la imagen
+          height={30} // Establece un valor adecuado para la altura de la imagen
+        />
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="bg-white">
+        <ModalContent className="bg-white max-h-100 max-w-150">
           {(onClose: () => void) => (
             <>
               <ModalHeader className="bg-gray-800 text-white p-4">
                 Agregar Un producto
               </ModalHeader>
-              <ModalBody className="p-4 max-h-120 overflow-y-auto">
-                <div className="flex items-center justify-center p-12">
-                  <div className="mx-auto w-full max-w-[550px]">
+              <ModalBody className="border border-gray-200 bg-white shadow-md max-h-[33rem] overflow-y-auto">
+                <div className="flex flex-col items-center justify-center p-12">
+                  <div className="w-full max-w-[550px]">
                     <form action="https://formbold.com/s/FORM_ID" method="POST">
-                      <div className="mb-6 pt-4">
-                        <label className="mb-5 block text-xl font-semibold text-[#07074D]">
+                      <div className="mb-4">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={actualiza}
+                        />
+                        <input
+                          type="text"
+                          value={ruta}
+                          className="form-control mt-2"
+                          readOnly
+                        />
+                      </div>
+                      <div className="mb-6">
+                        <label className="block text-xl font-semibold text-[#07074D]">
                           Subir Imagen
                         </label>
-
-                        <div className="mb-8">
+                        <div className="mt-4">
                           <input
                             type="file"
                             name="file"
@@ -55,10 +78,10 @@ const Agregar_producto_Component: React.FC = () => {
                             className="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center"
                           >
                             <div>
-                              <span className="mb-2 block text-xl font-semibold text-[#07074D]">
+                              <span className="block text-xl font-semibold text-[#07074D]">
                                 Arrastra
                               </span>
-                              <span className="mb-2 block text-base font-medium text-[#6B7280]">
+                              <span className="block text-base font-medium text-[#6B7280]">
                                 O
                               </span>
                               <span className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
@@ -68,31 +91,26 @@ const Agregar_producto_Component: React.FC = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="mb-5">
-                        <label
-                          //   for="name"
-                          className="mb-3 block text-base font-medium text-[#07074D]"
-                        >
-                        Nombre del producto
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          placeholder="Full Name"
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                        />
-                      </div>
-                       {/* select proveedor */}
-                      <div className="mb-5">
-                       
-                        <div className="max-w-2xl mx-auto">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                      <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-base font-medium text-[#07074D]">
+                            Nombre del producto
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            placeholder="Nombre del producto"
+                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-900">
                             Proveedor
                           </label>
                           <select
                             id="countries"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           >
                             <option selected>Escoge un proveedor</option>
                             <option value="US">United States</option>
@@ -102,12 +120,9 @@ const Agregar_producto_Component: React.FC = () => {
                           </select>
                         </div>
                       </div>
-                      <div className="mb-5">
-                        <label
-                          //   for="subject"
-                          className="mb-3 block text-base font-medium text-[#07074D]"
-                        >
-                      Cantidad
+                      <div>
+                        <label className="block text-base font-medium text-[#07074D]">
+                          Cantidad
                         </label>
                         <input
                           type="text"
@@ -117,15 +132,11 @@ const Agregar_producto_Component: React.FC = () => {
                           className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
                       </div>
-                      <div className="mb-5">
-                        <label
-                          //   for="message"
-                          className="mb-3 block text-base font-medium text-[#07074D]"
-                        >
-                          Descripcion
+                      <div>
+                        <label className="block text-base font-medium text-[#07074D]">
+                          Descripción
                         </label>
                         <textarea
-                          //   rows="4"
                           name="message"
                           id="message"
                           placeholder="Type your message"

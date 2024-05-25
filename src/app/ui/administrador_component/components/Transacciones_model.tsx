@@ -1,16 +1,60 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { getUserIdFromToken } from '../../authUtils';
+const token = Cookies.get('token');
 
-function Transacciones_model() {
-    
+const Transacciones_model: React.FC=()=> {
+  const [datos, setDatos] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+        if(token){
+        const userId = getUserIdFromToken(token);
+        const apiUrl = 'http://localhost:3002/admin/TopVentas';
+        const requestBody = {
+            id_usuario: userId,
+        };
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('No se pudo obtener los datos');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData.data);  // Verifica los datos recibidos
+
+        setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
+        setIsLoading(false);
+    }
+    } catch (error) {
+        console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+        setError(error instanceof Error ? error.message : String(error));
+        setIsLoading(false);
+    }
+};
+useEffect(() => {
+  fetchData();
+}, []);
   return (
     <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
     <div className="mb-4 flex items-center justify-between">
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">
-          Latest Transactions
+          Productos mas vendidos Ordenado por Estado
         </h3>
         <span className="text-base font-normal text-gray-500">
-          This is a list of latest transactions
+          Lista de los productos
         </span>
       </div>
       <div className="flex-shrink-0">
@@ -33,117 +77,49 @@ function Transacciones_model() {
                     scope="col"
                     className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Transaction
+                   Producto
                   </th>
                   <th
                     scope="col"
                     className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Date & Time
+                    Estado
                   </th>
                   <th
                     scope="col"
                     className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Amount
+                  Total
+                  </th>
+                  <th
+                    scope="col"
+                    className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                   Cantidad
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white">
-                <tr>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                    Payment from{" "}
-                    <span className="font-semibold">
-                      Bonnie Green
-                    </span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 23 ,2021
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $2300
-                  </td>
-                </tr>
-                <tr className="bg-gray-50">
+              {datos.map((dato, index) => (
+                <tr key={index} className="bg-gray-50">
                   <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                    Payment refund to{" "}
-                    <span className="font-semibold">#00910</span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 23 ,2021
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    -$670
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                    Payment failed from{" "}
-                    <span className="font-semibold">#087651</span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 18 ,2021
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $234
-                  </td>
-                </tr>
-                <tr className="bg-gray-50">
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                    Payment from{" "}
+                  {dato.producto}
                     <span className="font-semibold">
-                      Lana Byrd
+                      
                     </span>
                   </td>
                   <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 15 ,2021
+                  {dato.estado}
                   </td>
                   <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $5000
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                    Payment from{" "}
-                    <span className="font-semibold">
-                      Jese Leos
-                    </span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 15 ,2021
+                  {dato.total}
                   </td>
                   <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $2300
+                  {dato.cantidad}
                   </td>
                 </tr>
-                <tr className="bg-gray-50">
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                    Payment from{" "}
-                    <span className="font-semibold">
-                      THEMESBERG LLC
-                    </span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 11 ,2021
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $560
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                    Payment from{" "}
-                    <span className="font-semibold">
-                      Lana Lysle
-                    </span>
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                    Apr 6 ,2021
-                  </td>
-                  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                    $1437
-                  </td>
-                </tr>
+             ))}
+         
               </tbody>
             </table>
           </div>

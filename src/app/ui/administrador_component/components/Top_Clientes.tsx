@@ -1,9 +1,52 @@
-import React from 'react';
-
+"use client"
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { getUserIdFromToken } from '../../authUtils';
+const token = Cookies.get('token');
 // Definición del componente funcional
-function Top_Clientes() {
-    
+  const Top_Clientes: React.FC = () => {
     // Retorna el JSX que representa la UI del componente
+    const [datos, setDatos] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchData = async () => {
+      try {
+          if(token){
+          const userId = getUserIdFromToken(token);
+          const apiUrl = 'http://localhost:3002/admin/TopUsers';
+          const requestBody = {
+              id_usuario: userId,
+          };
+
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify(requestBody)
+          });
+
+          if (!response.ok) {
+              throw new Error('No se pudo obtener los datos');
+          }
+
+          const responseData = await response.json();
+          console.log(responseData.data);  // Verifica los datos recibidos
+
+          setDatos(responseData.data);  // Actualiza el estado datos con los datos recibidos
+          setIsLoading(false);
+      }
+      } catch (error) {
+          console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+          setError(error instanceof Error ? error.message : String(error));
+          setIsLoading(false);
+      }
+  };
+  useEffect(() => {
+    fetchData();
+}, []);
     return (
       <>
        <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
@@ -20,12 +63,13 @@ function Top_Clientes() {
                   </div>
                   <div className="flow-root">
                     <ul role="list" className="divide-y divide-gray-200">
-                      <li className="py-3 sm:py-4">
+                    {datos.map((dato, index) => (
+                      <li key={index} className="py-3 sm:py-4">
                         <div className="flex items-center space-x-4">
                           <div className="flex-shrink-0"></div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-gray-900 truncate">
-                              Neil Sims
+                              {dato.nombre}
                             </p>
                             <p className="text-sm text-gray-500 truncate">
                               <a
@@ -33,109 +77,16 @@ function Top_Clientes() {
                                 className="__cf_email__"
                                 data-cfemail="17727a767e7b57607e7973646372653974787a"
                               >
-                                [email&#160;protected]
+                                {dato.fecha}
                               </a>
                             </p>
                           </div>
                           <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            $320
+                          ${dato.total}
                           </div>
                         </div>
                       </li>
-                      <li className="py-3 sm:py-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex-shrink-0"></div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              Bonnie Green
-                            </p>
-                            <p className="text-sm text-gray-500 truncate">
-                              <a
-                                href="/cdn-cgi/l/email-protection"
-                                className="__cf_email__"
-                                data-cfemail="d4b1b9b5bdb894a3bdbab0a7a0b1a6fab7bbb9"
-                              >
-                                [email&#160;protected]
-                              </a>
-                            </p>
-                          </div>
-                          <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            $3467
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-3 sm:py-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex-shrink-0">
-                            {/* <img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/michael-gough.png" alt="Neil image"> */}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              Michael Gough
-                            </p>
-                            <p className="text-sm text-gray-500 truncate">
-                              <a
-                                href="/cdn-cgi/l/email-protection"
-                                className="__cf_email__"
-                                data-cfemail="57323a363e3b17203e3933242332257934383a"
-                              >
-                                [email&#160;protected]
-                              </a>
-                            </p>
-                          </div>
-                          <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            $67
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-3 sm:py-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex-shrink-0">
-                            {/* <img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/thomas-lean.png" alt="Neil image"> */}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              Thomes Lean
-                            </p>
-                            <p className="text-sm text-gray-500 truncate">
-                              <a
-                                href="/cdn-cgi/l/email-protection"
-                                className="__cf_email__"
-                                data-cfemail="284d45494144685f41464c5b5c4d5a064b4745"
-                              >
-                                [email&#160;protected]
-                              </a>
-                            </p>
-                          </div>
-                          <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            $2367
-                          </div>
-                        </div>
-                      </li>
-                      <li className="pt-3 sm:pt-4 pb-0">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex-shrink-0">
-                            {/* <img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/lana-byrd.png" alt="Neil image"> */}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              Lana Byrd
-                            </p>
-                            <p className="text-sm text-gray-500 truncate">
-                              <a
-                                href="/cdn-cgi/l/email-protection"
-                                className="__cf_email__"
-                                data-cfemail="a2c7cfc3cbcee2d5cbccc6d1d6c7d08cc1cdcf"
-                              >
-                                [email&#160;protected]
-                              </a>
-                            </p>
-                          </div>
-                          <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            $367
-                          </div>
-                        </div>
-                      </li>
+                    ))}
                     </ul>
                   </div>
                 </div>
