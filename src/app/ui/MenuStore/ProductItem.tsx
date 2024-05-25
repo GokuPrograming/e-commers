@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { getUserIdFromToken } from "../authUtils";
-import { useRouter } from "next/navigation"; // Corrección en la importación
+import { useRouter } from 'next/navigation'; // Corrección en la importación
 import VerMas_modal_Component from "@/app/ui/MenuStore/modal/VerMas_modal_Component";
-
 // const token = Cookies.get('token');
 import Image from "next/image";
 type Product = {
@@ -23,6 +22,7 @@ type ProductItemProps = {
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
+  const router = useRouter();
   const [count, setCount] = useState(1);
   const [value, setValue] = useState<number>(producto.id_producto); // Usa producto.id_producto como valor inicial
 
@@ -47,10 +47,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
   };
   // Función manejadora para el clic del botón
   const handleAddToCartClick = async () => {
+
     const token = Cookies.get("token");
     if (!token) {
       console.log("no hay token");
       alert("no ah iniciado sesion");
+     
       router.push("/pages/auth/login");
       return;
     }
@@ -88,45 +90,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
       reset();
     }
   };
-  const handleVerMas = async () => {
-    // const token = Cookies.get('token');
-    // if (!token) {
-    //     console.log("no hay token");
-    //     alert("no ah iniciado sesion")
-    //     router.push('/pages/auth/login');
-    //     return;
-    // }
-    // if (token) {
-    //     const userId = getUserIdFromToken(token);
-    //     onAddToCart(producto.id_producto);
-    //     const apiUrl = 'https://api-cuchau-store-pg.onrender.com/addToCar';
-    //     const requestBody = {
-    //         id_producto: producto.id_producto,
-    //         id_usuario: userId,
-    //         cantidad: count
-    //     }
-    //     const response = await fetch(apiUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${token}`
-    //         },
-    //         body: JSON.stringify(requestBody)
-    //     });
-    //     if (!response.ok) {
-    //         if (count > producto.almacen) {
-    //             alert('no hay en almacen :');
-    //             console.log(('no hay en almacen :'));
-    //         }
-    //         throw new Error('Error al enviar la solicitud');
-    //     }
-    //     console.log('Solicitud enviada con éxito');
-    //     const responseData = await response.json();
-    //     console.log('Respuesta de la API:', responseData);
-    //     alert('Producto agregado al carrito exitosamente');
-    //     reset();
-    // };
-  };
+ 
 
   return (
     <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
@@ -182,12 +146,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ producto, onAddToCart }) => {
               />
             </button>
             <VerMas_modal_Component value={value} />
-            {/* <button
-              className="text-sm bg-blue-500 px-4 py-1.5 text-white rounded-lg duration-100 hover:bg-blue-600"
-              //   onClick={handleVerMas}
-            >
-              Ver Mas
-            </button> */}
+   
           </div>
         </div>
       </div>

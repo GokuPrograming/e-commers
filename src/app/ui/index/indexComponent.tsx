@@ -13,7 +13,7 @@ const redirectToPage = (path: string) => {
 };
 function indexComponent() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const router = useRouter();
+    const router = useRouter(); 
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
