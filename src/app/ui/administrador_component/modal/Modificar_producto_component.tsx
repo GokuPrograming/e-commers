@@ -163,7 +163,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
           <ModalHeader className="bg-gray-800 text-white p-4">
             Modificar Producto
           </ModalHeader>
-          <ModalBody className="p-2 max-h-[33rem] overflow-y-auto">
+          <ModalBody className="p-2 max-h-[35rem] overflow-y-auto">
             <div className="flex items-center justify-center p-12">
               <div className="mx-auto w-full max-w-[550px]">
                 <form onSubmit={handleSubmit}>
@@ -189,6 +189,20 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
                       id="producto"
                       placeholder="Nombre del producto"
                       value={producto?.producto || ""}
+                      onChange={handleChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    />
+                  </div>
+                  <div className="mb-5">
+                    <label className="mb-3 block text-base font-medium text-[#07074D]">
+                      Precio
+                    </label>
+                    <input
+                      type="number"
+                      name="precio"
+                      id="precio"
+                      placeholder="Precio del producto"
+                      value={producto?.precio || ""}
                       onChange={handleChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
@@ -250,7 +264,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
                       Cantidad
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="almacen"
                       id="almacen"
                       placeholder="Cantidad"

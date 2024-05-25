@@ -6,6 +6,9 @@ import { getUserIdFromToken } from "../authUtils";
 import Image from "next/image";
 import Agregar_producto_Component from "./modal/Agregar_producto_Component";
 import Modificar_producto_component from "./modal/Modificar_producto_component";
+import Modificar_imagen_modal_component from "./modal/Agregar_imagen_modal_component";
+
+
 const token = Cookies.get("token");
 
 const Productos_panel_component: React.FC = () => {
@@ -71,6 +74,7 @@ const Productos_panel_component: React.FC = () => {
             <th className="px-4 py-2">Proveedor</th>
             <th className="px-4 py-2">Borrar</th>
             <th className="px-4 py-2">Editar</th>
+            <th className="px-4 py-2">Editar imagen</th>
           </tr>
         </thead>
         <tbody>
@@ -93,6 +97,9 @@ const Productos_panel_component: React.FC = () => {
               </td>
               <td className="px-4 py-2">
                 <Modificar_producto_component value={dato.id_producto} />
+              </td>
+              <td className="px-4 py-2">
+               <Modificar_imagen_modal_component value={dato.id_producto} />
               </td>
             </tr>
           ))}

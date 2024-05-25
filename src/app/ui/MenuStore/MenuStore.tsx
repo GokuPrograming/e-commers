@@ -93,22 +93,23 @@ const MenuStore: React.FC = () => {
         <div className="bg-white">
             <MenuStoreHeader />
             <section className="py-10 bg-gray-100">
-                <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {productos && productos.length > 0 ? (
-                        productos.map((producto) => (
-                            <ProductItem
-                                key={producto.id_producto}
-                                producto={producto}
-                                onAddToCart={handleAddToCart}
-                            />
-                        ))
-                    ) : (
-                        !isLoading && <div>No products available</div>
-                    )}
-                </div>
-                {isLoading && <div>Loading...</div>}
-                {error && <div>Error: {error}</div>}
-            </section>
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {productos && productos.length > 0 ? (
+          productos.map((producto) => (
+            <ProductItem
+              key={producto.id_producto}
+              producto={producto}
+              onAddToCart={handleAddToCart}
+            />
+          ))
+        ) : (
+          !isLoading && <div>No products available</div>
+        )}
+      </div>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error: {error}</div>}
+    </section>
+            
         </div>
     );
 };
