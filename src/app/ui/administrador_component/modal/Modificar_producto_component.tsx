@@ -41,7 +41,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3002/producto/${value}`)
+    fetch(`https://api-cuchau-store-pg.onrender.com/producto/${value}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -61,7 +61,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
         setLoading(false);
       });
 
-    fetch(`http://localhost:3002/proveedor`)
+    fetch(`https://api-cuchau-store-pg.onrender.com/proveedor`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -80,7 +80,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
         setError(error);
         setLoading(false);
       });
-    fetch(`http://localhost:3002/categoria`)
+    fetch(`https://api-cuchau-store-pg.onrender.com/categoria`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -120,7 +120,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       return;
     }
 
-    fetch(`http://localhost:3002/registrarProductos`, {
+    fetch(`https://api-cuchau-store-pg.onrender.com/registrarProductos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
         return response.json();
       })
       .then((data) => {
-      alert("Success:", data);
+      alert("Success");
         onClose();
       })
       .catch((error) => {

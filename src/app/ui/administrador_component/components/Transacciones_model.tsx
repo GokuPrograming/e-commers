@@ -13,7 +13,7 @@ const Transacciones_model: React.FC=()=> {
     try {
         if(token){
         const userId = getUserIdFromToken(token);
-        const apiUrl = 'http://localhost:3002/admin/TopVentas';
+        const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/TopVentas';
         const requestBody = {
             id_usuario: userId,
         };

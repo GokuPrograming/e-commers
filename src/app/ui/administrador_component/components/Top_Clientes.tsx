@@ -14,7 +14,7 @@ const token = Cookies.get('token');
       try {
           if(token){
           const userId = getUserIdFromToken(token);
-          const apiUrl = 'http://localhost:3002/admin/TopUsers';
+          const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/TopUsers';
           const requestBody = {
               id_usuario: userId,
           };

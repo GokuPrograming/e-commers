@@ -20,7 +20,7 @@ const Hero_estadistico = () => {
       try {
         if (token) {
           const userId = getUserIdFromToken(token);
-          const apiUrl = 'http://localhost:3002/admin/TotalesBanner';
+          const apiUrl = 'https://api-cuchau-store-pg.onrender.com/admin/TotalesBanner';
           const requestBody = {
             id_usuario: userId,
           };
