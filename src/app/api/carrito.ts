@@ -18,7 +18,7 @@ export const fetchCartItems = async (
         // Obtener el id_usuario del token
         const userIdFromToken = getUserIdFromToken(token);
         setUserId(userIdFromToken);
-        const apiUrl = 'http://localhost:3002/user/car';
+        const apiUrl = 'https://api-cuchau-store-pg.onrender.com/user/car';
 
         // Realizar la solicitud POST a la API
         const response = await fetch(apiUrl, {
