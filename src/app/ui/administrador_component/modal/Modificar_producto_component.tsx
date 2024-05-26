@@ -12,7 +12,7 @@ import {
 
 interface Producto {
   producto: string;
-  precio: string;
+  precio: number;
   almacen: number;
   descripcion: string;
   categoria: string;
@@ -31,16 +31,18 @@ interface Categoria {
   id_categoria: number;
 }
 
-const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
+const Modificar_producto_component: React.FC<{ value: number }> = ({ value }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [producto, setProducto] = useState<Producto | null>(null);
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
   const [categoria, setCategoria] = useState<Categoria[]>([]);
-
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    setLoading(true);
+    setError(null);
+
     fetch(`https://api-cuchau-store-pg.onrender.com/producto/${value}`)
       .then((response) => {
         if (!response.ok) {
@@ -48,16 +50,17 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
         }
         return response.json();
       })
-      .then((data: { data: Producto[] }) => {
-        if (data.data && data.data.length > 0) {
-          setProducto(data.data[0]);
-          setLoading(false);
+      .then((data: { data: Producto }) => {
+        if (data.data) {
+          setProducto(data.data);
         } else {
           throw new Error("No data found");
         }
       })
       .catch((error: Error) => {
         setError(error);
+      })
+      .finally(() => {
         setLoading(false);
       });
 
@@ -71,15 +74,14 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       .then((dataP: { data: Proveedor[] }) => {
         if (dataP.data && dataP.data.length > 0) {
           setProveedores(dataP.data);
-          setLoading(false);
         } else {
           throw new Error("No data found");
         }
       })
       .catch((error: Error) => {
         setError(error);
-        setLoading(false);
       });
+
     fetch(`https://api-cuchau-store-pg.onrender.com/categoria`)
       .then((response) => {
         if (!response.ok) {
@@ -89,17 +91,13 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       })
       .then((dataC: { data: Categoria[] }) => {
         if (dataC.data && dataC.data.length > 0) {
-          
           setCategoria(dataC.data);
-
-          setLoading(false);
         } else {
           throw new Error("No data found");
         }
       })
       .catch((error: Error) => {
         setError(error);
-        setLoading(false);
       });
   }, [value]);
 
@@ -120,7 +118,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       return;
     }
 
-    fetch(`https://api-cuchau-store-pg.onrender.com/registrarProductos`, {
+    fetch (`https://api-cuchau-store-pg.onrender.com/registrarProductos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +140,15 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
+
+    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <>
@@ -161,7 +167,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalContent className="bg-white">
           <ModalHeader className="bg-gray-800 text-white p-4">
-            Modificar Producto
+            Modificar Producto {value} ${value}
           </ModalHeader>
           <ModalBody className="p-2 max-h-[35rem] overflow-y-auto">
             <div className="flex items-center justify-center p-12">
@@ -202,7 +208,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
                       name="precio"
                       id="precio"
                       placeholder="Precio del producto"
-                      value={producto?.precio || ""}
+                      value={producto?.precio }
                       onChange={handleChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
@@ -317,4 +323,4 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
   );
 };
 
-export default ModificarProductoComponent;
+export default Modificar_producto_component;

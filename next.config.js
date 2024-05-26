@@ -1,7 +1,7 @@
 // next.config.js
+
 module.exports = {
-    images: {
-      domains: ['localhost'], // Replace with actual domain
-    },
-  };
-  
+  images: {
+    domains: ['api-cuchau-store-pg.onrender.com'],
+  },
+};

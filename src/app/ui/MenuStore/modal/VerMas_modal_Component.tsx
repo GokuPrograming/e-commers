@@ -35,7 +35,7 @@ const VerMasModalComponent: React.FC<VerMasModalComponentProps> = ({
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(`http://localhost:3002/producto/${value}`)
+    fetch(`https://api-cuchau-store-pg.onrender.com/producto/${value}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

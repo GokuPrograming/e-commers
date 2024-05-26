@@ -41,7 +41,7 @@ const ModificarProductoComponent: React.FC<{ value: number }> = ({ value }) => {
       formData.append('imagen', file);
       formData.append('id_producto', value.toString());
 
-      const response = await fetch('http://localhost:3002/actualizarImagen', {
+      const response = await fetch('https://api-cuchau-store-pg.onrender.com/actualizarImagen', {
         method: 'POST',
         body: formData,
       });
