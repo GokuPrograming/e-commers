@@ -176,8 +176,8 @@ const PDF: React.FC<PDFProps> = ({ pedidoId }) => {
       });
 
       // Total final
-      const totalFinal = productos.reduce((total, purchase) => total + purchase.total_subtotal, 0);
-      doc.text(`Total Final: ${totalFinal}`, margin, currentY + 20);
+      // const totalFinal = productos.reduce((total, purchase) => total + purchase.total_subtotal, 0);
+      // doc.text(`Total Final: ${totalFinal}`, margin, currentY + 20);
 
       // Guardar el PDF
       doc.save('reporte_compras.pdf');

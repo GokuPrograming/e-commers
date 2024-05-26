@@ -242,7 +242,7 @@ const Modificar_producto_component: React.FC<{ value: number }> = ({ value }) =>
                   <div className="mb-5">
                     <div className="max-w-2xl mx-auto">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                        Proveedor
+                        Categoria
                       </label>
                       <select
                         name="categoria"

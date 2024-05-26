@@ -2,6 +2,7 @@
 
 module.exports = {
   images: {
-    domains: ['api-cuchau-store-pg.onrender.com'],
+    domains: ['api-cuchau-store-pg.onrender.com', 'localhost'],
   },
 };
+
